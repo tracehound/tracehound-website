@@ -1,0 +1,108 @@
+---
+import { Check } from 'lucide-react'
+import Footer from '../../components/Footer.astro'
+import Navbar from '../../components/Navbar.astro'
+import Layout from '../../layouts/Layout.astro'
+
+const benefits = [
+  'Notification API (SIEM, SOC, webhooks)',
+  'Async Codec (streaming compression)',
+  'Evidence Export (S3, R2, GCS)',
+  'Retention & Eviction Policies',
+  'Email Support (24h SLA)',
+  'Commercial License',
+]
+---
+
+<Layout title="Upgrade to Pro | Tracehound" description="Get full visibility and control.">
+  <Navbar />
+
+  <main class="flex-1 py-32">
+    <div class="container-custom max-w-4xl">
+      <div class="grid md:grid-cols-2 gap-16">
+        <div>
+          <h1 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">
+            Upgrade to <span class="text-primary">Pro</span>
+          </h1>
+          <p class="text-xl text-text-muted mb-8">
+            Secure your growing SaaS with deterministic boundaries.
+          </p>
+
+          <div class="space-y-4 mb-8">
+            {
+              benefits.map((benefit) => (
+                <div class="flex items-start gap-3">
+                  <div class="p-1 bg-primary/10 rounded-full mt-0.5">
+                    <Check className="w-4 h-4 text-primary" />
+                  </div>
+                  <span class="text-text-muted">{benefit}</span>
+                </div>
+              ))
+            }
+          </div>
+
+          <div class="p-6 bg-surface/30 border border-surface-highlight rounded-sm">
+            <p class="text-sm text-text-muted">
+              "Pro tier gives us the rigorous evidence retention we need for our SOC2 audits,
+              without the enterprise complexity."
+            </p>
+            <div class="mt-4 flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-surface-highlight"></div>
+              <div class="text-xs">
+                <div class="text-white font-bold">Engineering Lead</div>
+                <div class="text-text-muted">Fintech Startup</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-surface/30 border border-surface-highlight rounded-sm p-8">
+          <h2 class="text-xl font-bold mb-2">Get Started</h2>
+          <p class="text-text-muted text-sm mb-6">
+            We are currently onboarding Pro customers manually to ensure optimal configuration.
+          </p>
+
+          <form class="space-y-4">
+            <div>
+              <label for="email" class="block text-xs font-mono text-text-muted uppercase mb-2"
+                >Work Email</label
+              >
+              <input
+                type="email"
+                id="email"
+                class="w-full bg-background border border-surface-highlight rounded-sm px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
+                placeholder="you@company.com"
+              />
+            </div>
+
+            <div>
+              <label for="company" class="block text-xs font-mono text-text-muted uppercase mb-2"
+                >Company Name</label
+              >
+              <input
+                type="text"
+                id="company"
+                class="w-full bg-background border border-surface-highlight rounded-sm px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
+                placeholder="Acme Inc."
+              />
+            </div>
+
+            <div class="pt-4">
+              <button
+                type="button"
+                class="w-full bg-primary text-background font-bold uppercase tracking-wider py-4 rounded-sm hover:bg-primary/90 transition-colors"
+              >
+                Request Access
+              </button>
+              <p class="text-center text-xs text-text-muted mt-4">
+                We usually respond within 24 hours.
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
