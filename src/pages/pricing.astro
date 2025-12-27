@@ -11,12 +11,71 @@ import Layout from '../layouts/Layout.astro'
 >
   <Navbar />
 
+  <!-- Pricing Hero -->
+  <section class="pt-32 pb-16">
+    <div class="container-custom">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+          One ecosystem.<br />
+          <span class="text-text-muted">Different missions.</span>
+        </h1>
+        <p class="text-text-muted text-lg mb-12 max-w-2xl mx-auto">
+          Tracehound isolates runtime threats. Argos detects behavioral anomalies. Both are priced
+          independently — choose what fits your security posture.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+          <a
+            href="#pricing"
+            class="group px-6 py-4 bg-surface/50 border border-primary/30 hover:border-primary/50 rounded-sm transition-all"
+          >
+            <div class="text-xs text-text-muted uppercase tracking-wider mb-1 font-mono">
+              The Core
+            </div>
+            <div
+              class="text-xl font-bold text-white group-hover:text-primary transition-colors font-mono"
+            >
+              Tracehound
+            </div>
+            <div class="text-sm text-text-muted mt-1">
+              From <span class="text-primary">Free</span> to <span class="text-white">$499/mo</span>
+            </div>
+          </a>
+
+          <a
+            href="#argos"
+            class="group px-6 py-4 bg-purple-500/5 border border-purple-500/20 hover:border-purple-500/50 rounded-sm transition-all"
+          >
+            <div class="text-xs text-purple-400 uppercase tracking-wider mb-1 font-mono">
+              The Observer
+            </div>
+            <div
+              class="text-xl font-bold text-white group-hover:text-purple-400 transition-colors font-mono"
+            >
+              Argos
+            </div>
+            <div class="text-sm text-text-muted mt-1">
+              <span class="text-purple-400">$49/mo</span> standalone
+            </div>
+          </a>
+        </div>
+
+        <div
+          class="mt-8 inline-flex items-center gap-2 px-4 py-2 bg-surface/30 border border-surface-highlight rounded-sm text-sm text-text-muted"
+        >
+          <span class="w-2 h-2 bg-primary rounded-full"></span>
+          <span>Priced per logical service — not per request, not per replica.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <PricingComponent />
 
   <!-- Argos Section -->
   <section class="py-24 bg-surface/30 border-y border-surface-highlight" id="argos">
     <div class="container-custom">
-      <div class="max-w-5xl mx-auto">
+      <div class="max-w-7xl mx-auto">
         <div class="flex flex-col lg:flex-row gap-16 items-start">
           <div class="flex-1">
             <div
@@ -30,13 +89,23 @@ import Layout from '../layouts/Layout.astro'
             </p>
             <p class="text-text-muted mb-6">Licensed and operated independently from Tracehound.</p>
 
-            <div class="flex items-baseline gap-1 mb-2">
-              <span class="text-4xl font-bold text-white">$750</span>
-              <span class="text-text-muted text-lg">/ month</span>
+            <div class="flex flex-col sm:flex-row gap-6 mb-8">
+              <div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-4xl font-bold text-white">$49</span>
+                  <span class="text-text-muted text-lg">/ month</span>
+                </div>
+                <p class="text-xs text-text-muted font-mono">Standalone</p>
+              </div>
+              <div class="hidden sm:block w-px bg-purple-500/30"></div>
+              <div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-4xl font-bold text-white">+$29</span>
+                  <span class="text-text-muted text-lg">/ month</span>
+                </div>
+                <p class="text-xs text-text-muted font-mono">With Tracehound Pro</p>
+              </div>
             </div>
-            <p class="text-xs text-text-muted mb-8 font-mono">
-              -- expected to increase as adoption grows
-            </p>
 
             <div class="prose prose-invert prose-sm text-text-muted mb-8">
               <p>
@@ -284,6 +353,25 @@ import Layout from '../layouts/Layout.astro'
           </p>
           <p class="text-primary">If it cannot, this is what precision costs.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ CTA -->
+  <section class="py-16 border-t border-surface-highlight">
+    <div class="container-custom">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-2xl font-bold mb-4">Have questions about pricing?</h2>
+        <p class="text-text-muted mb-8">
+          Learn about per-service pricing, Kubernetes replicas, microservices, and more.
+        </p>
+        <a
+          href="/faq"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-surface-highlight text-white rounded-sm font-medium hover:bg-surface-highlight/80 transition-colors"
+        >
+          Read our FAQ
+          <span class="text-primary">→</span>
+        </a>
       </div>
     </div>
   </section>

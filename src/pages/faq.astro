@@ -1,0 +1,227 @@
+---
+import Navbar from '../components/Navbar.astro'
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout
+  title="FAQ | Tracehound"
+  description="Frequently asked questions about Tracehound pricing, licensing, and features."
+>
+  <Navbar />
+
+  <!-- FAQ Hero -->
+  <section class="pt-32 pb-16">
+    <div class="container-custom">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+          Frequently Asked<br />
+          <span class="text-text-muted">Questions</span>
+        </h1>
+        <p class="text-text-muted text-lg max-w-2xl mx-auto">
+          Everything you need to know about pricing, licensing, <br /> and how Tracehound works.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Questions -->
+  <section class="py-16">
+    <div class="container-custom">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold mb-8 font-mono flex items-center gap-3">
+          <span
+            class="w-8 h-8 bg-primary/20 text-primary rounded-sm flex items-center justify-center text-sm"
+            >$</span
+          >
+          Pricing & Licensing
+        </h2>
+
+        <div class="space-y-6">
+          <div class="bg-surface/30 border border-surface-highlight rounded-sm p-6">
+            <h3 class="text-lg font-bold text-white mb-3 font-mono">What counts as a "service"?</h3>
+            <p class="text-text-muted leading-relaxed">
+              A service is a <strong class="text-white">logical application</strong> — your API server,
+              your worker process, your webhook handler. If it has its own entry point and runs independently,
+              it's a service. Monoliths count as one service.
+            </p>
+          </div>
+
+          <div class="bg-surface/30 border border-surface-highlight rounded-sm p-6">
+            <h3 class="text-lg font-bold text-white mb-3 font-mono">
+              I have 10 Kubernetes replicas. Do I pay 10x?
+            </h3>
+            <p class="text-text-muted leading-relaxed">
+              <strong class="text-primary">No.</strong> Replicas of the same service are covered under
+              one license. You pay per <em>logical service</em>, not per instance, pod, or
+              container.
+            </p>
+          </div>
+
+          <div class="bg-surface/30 border border-surface-highlight rounded-sm p-6">
+            <h3 class="text-lg font-bold text-white mb-3 font-mono">What about microservices?</h3>
+            <p class="text-text-muted leading-relaxed">
+              Each microservice that integrates Tracehound counts as one service. If you have 5
+              microservices using Tracehound, you need 5 licenses.
+              <span class="text-white">Enterprise tier includes volume discounts.</span>
+            </p>
+          </div>
+
+          <div class="bg-surface/30 border border-surface-highlight rounded-sm p-6">
+            <h3 class="text-lg font-bold text-white mb-3 font-mono">
+              Why not price per request like other tools?
+            </h3>
+            <p class="text-text-muted leading-relaxed">
+              Request-based pricing creates <strong class="text-white">unpredictable costs</strong> and
+              punishes success. Security should not become more expensive when your product grows. Our
+              flat per-service model means no surprise bills.
+            </p>
+          </div>
+
+          <div class="bg-surface/30 border border-surface-highlight rounded-sm p-6">
+            <h3 class="text-lg font-bold text-white mb-3 font-mono">Can I try before buying?</h3>
+            <p class="text-text-muted leading-relaxed">
+              Yes. The <strong class="text-primary">Community tier is free forever</strong> for development,
+              testing, and small projects. Upgrade to Pro when you need production features like Evidence
+              Export and Notification API.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Argos Questions -->
+  <section class="py-16 bg-surface/20">
+    <div class="container-custom">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold mb-8 font-mono flex items-center gap-3">
+          <span
+            class="w-8 h-8 bg-purple-500/20 text-purple-400 rounded-sm flex items-center justify-center text-sm"
+            >A</span
+          >
+          Argos
+        </h2>
+
+        <div class="space-y-6">
+          <div class="bg-surface/30 border border-purple-500/20 rounded-sm p-6">
+            <h3 class="text-lg font-bold text-white mb-3 font-mono">
+              How does Argos pricing work with Tracehound?
+            </h3>
+            <p class="text-text-muted leading-relaxed">
+              Argos is a <strong class="text-purple-400">separate product</strong> with its own license.
+              You can use Argos standalone ($49/mo) or as a bundle with Tracehound Pro (+$29/mo). Enterprise
+              tier includes Argos at no additional cost.
+            </p>
+          </div>
+
+          <div class="bg-surface/30 border border-purple-500/20 rounded-sm p-6">
+            <h3 class="text-lg font-bold text-white mb-3 font-mono">
+              Do I need Argos if I have Tracehound?
+            </h3>
+            <p class="text-text-muted leading-relaxed">
+              Not necessarily. Tracehound handles <strong class="text-white"
+                >request-level threats</strong
+              >. Argos detects <strong class="text-purple-400"
+                >runtime anomalies between requests</strong
+              > — event loop stalls, worker drift, scheduling irregularities. They complement each other
+              but solve different problems.
+            </p>
+          </div>
+
+          <div class="bg-surface/30 border border-purple-500/20 rounded-sm p-6">
+            <h3 class="text-lg font-bold text-white mb-3 font-mono">
+              Can I use Argos without Tracehound?
+            </h3>
+            <p class="text-text-muted leading-relaxed">
+              Yes. Argos works as a standalone runtime observer. It emits signals to your existing
+              security infrastructure (SIEM, alerting, etc.) without requiring Tracehound.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Questions -->
+  <section class="py-16">
+    <div class="container-custom">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold mb-8 font-mono flex items-center gap-3">
+          <span
+            class="w-8 h-8 bg-surface-highlight text-white rounded-sm flex items-center justify-center text-sm"
+            >&lt;/&gt;</span
+          >
+          Technical
+        </h2>
+
+        <div class="space-y-6">
+          <div class="bg-surface/30 border border-surface-highlight rounded-sm p-6">
+            <h3 class="text-lg font-bold text-white mb-3 font-mono">
+              Does Tracehound add latency to my requests?
+            </h3>
+            <p class="text-text-muted leading-relaxed">
+              Tracehound is designed with a <strong class="text-white"
+                >zero-allocation hot path</strong
+              >. Critical operations happen synchronously without GC pressure. Evidence collection
+              and export happen asynchronously and never block request handling.
+            </p>
+          </div>
+
+          <div class="bg-surface/30 border border-surface-highlight rounded-sm p-6">
+            <h3 class="text-lg font-bold text-white mb-3 font-mono">
+              What happens if Tracehound crashes?
+            </h3>
+            <p class="text-text-muted leading-relaxed">
+              Tracehound uses <strong class="text-white">fail-open semantics</strong> by default. If something
+              goes wrong, your application continues to function — we never block your production traffic.
+              This is configurable for high-security environments.
+            </p>
+          </div>
+
+          <div class="bg-surface/30 border border-surface-highlight rounded-sm p-6">
+            <h3 class="text-lg font-bold text-white mb-3 font-mono">
+              Is Tracehound a WAF replacement?
+            </h3>
+            <p class="text-text-muted leading-relaxed">
+              <strong class="text-primary">No.</strong> WAFs operate at the network edge and filter known
+              attack patterns. Tracehound operates <strong class="text-white"
+                >inside your runtime</strong
+              > and isolates threats that bypass edge defenses. They work together — WAF is first line,
+              Tracehound is last line.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 border-t border-surface-highlight">
+    <div class="container-custom">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-2xl font-bold mb-4">Still have questions?</h2>
+        <p class="text-text-muted mb-8">Check our documentation or reach out to our team.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="/docs/getting-started"
+            class="px-6 py-3 bg-surface-highlight text-white rounded-sm font-medium hover:bg-surface-highlight/80 transition-colors"
+          >
+            Read the Docs
+          </a>
+          <a
+            href="/pricing"
+            class="px-6 py-3 bg-primary text-background rounded-sm font-medium hover:bg-primary/90 transition-colors"
+          >
+            View Pricing
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-6 border-t border-surface-highlight text-center text-text-muted text-sm">
+    <div class="container-custom">
+      &copy; {new Date().getFullYear()} Tracehound. All rights reserved.
+    </div>
+  </footer>
+</Layout>
