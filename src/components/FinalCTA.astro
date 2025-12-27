@@ -1,0 +1,39 @@
+---
+import { ArrowRight, Github } from 'lucide-react'
+---
+
+<section class="py-24 bg-gradient-to-b from-transparent via-primary/5 to-transparent">
+  <div class="container-custom">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">
+        Ready to secure your runtime?
+      </h2>
+      <p class="text-xl text-text-muted mb-10 max-w-2xl mx-auto">
+        Start with the free Community tier.<br /> Upgrade when you're ready to go to production.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="/docs/getting-started"
+          class="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-background bg-primary hover:bg-primary/90 transition-all rounded-sm group"
+        >
+          Get Started Free
+          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+        </a>
+        <a
+          href="https://github.com/laphilosophia/tracehound"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-text border border-surface-highlight hover:border-primary/50 hover:bg-surface-highlight/50 transition-all rounded-sm"
+        >
+          <Github className="mr-2 h-4 w-4" />
+          View on GitHub
+        </a>
+      </div>
+
+      <p class="mt-8 text-sm text-text-muted">
+        No credit card required. Community tier is free forever for non-commercial use.
+      </p>
+    </div>
+  </div>
+</section>

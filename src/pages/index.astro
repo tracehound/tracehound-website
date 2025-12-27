@@ -1,10 +1,13 @@
 ---
 import ArgosTeaser from '../components/ArgosTeaser.astro'
+import EcosystemSection from '../components/EcosystemSection.astro'
 import FeatureGrid from '../components/FeatureGrid.astro'
+import FinalCTA from '../components/FinalCTA.astro'
 import Hero from '../components/Hero.astro'
 import InteractiveArchitecture from '../components/InteractiveArchitecture'
 import Navbar from '../components/Navbar.astro'
 import Pricing from '../components/Pricing.astro'
+import QuickStart from '../components/QuickStart.astro'
 import Layout from '../layouts/Layout.astro'
 ---
 
@@ -14,14 +17,28 @@ import Layout from '../layouts/Layout.astro'
     <Hero />
     <InteractiveArchitecture client:visible />
     <FeatureGrid />
+    <EcosystemSection />
+    <QuickStart />
     <ArgosTeaser />
     <Pricing />
-
-    <!-- Footer Coming Soon -->
+    <FinalCTA />
   </main>
-  <footer class="py-6 border-t border-surface-highlight text-center text-text-muted text-sm">
+  <footer class="py-8 border-t border-surface-highlight">
     <div class="container-custom">
-      &copy; {new Date().getFullYear()} Tracehound. All rights reserved.
+      <div
+        class="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-text-muted"
+      >
+        <div>&copy; {new Date().getFullYear()} Tracehound. All rights reserved.</div>
+        <div class="flex items-center gap-6">
+          <a href="/docs/getting-started" class="hover:text-white transition-colors">Docs</a>
+          <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+          <a
+            href="https://github.com/laphilosophia/tracehound"
+            target="_blank"
+            class="hover:text-white transition-colors">GitHub</a
+          >
+        </div>
+      </div>
     </div>
   </footer>
 </Layout>

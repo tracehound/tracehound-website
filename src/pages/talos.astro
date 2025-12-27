@@ -1,0 +1,156 @@
+---
+import { ArrowRight, Ban, Bell, ShieldAlert, Timer } from 'lucide-react'
+import NotifyForm from '../components/NotifyForm.astro'
+import ProductPageLayout from '../layouts/ProductPageLayout.astro'
+---
+
+<ProductPageLayout
+  title="Talos | Policy-Driven Response"
+  description="External policy-driven response engine for Tracehound. Block, throttle, challenge — executed with mechanical precision."
+  product="talos"
+  status="coming-soon"
+  color="#f97316"
+>
+  <!-- Hero Section -->
+  <section class="relative py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-orange-500/5 to-transparent"></div>
+    <div class="container-custom relative">
+      <div class="max-w-4xl mx-auto text-center">
+        <!-- Status Badge -->
+        <div
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-400 text-sm font-medium mb-8"
+        >
+          <span class="w-2 h-2 bg-orange-400 rounded-full"></span>
+          Coming Q2 2026
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+          <span class="text-orange-400">Talos</span><br />
+          <span class="text-text-muted">The Bronze Automaton</span>
+        </h1>
+
+        <p class="text-xl text-text-muted max-w-2xl mx-auto mb-6 leading-relaxed">
+          In Greek mythology, <span class="text-orange-400 font-medium">Talos</span> was the giant bronze
+          automaton protecting Crete — emotionless and tireless. Our Talos executes response actions with
+          the same mechanical precision.
+        </p>
+
+        <p class="text-lg text-text-muted max-w-xl mx-auto mb-12">
+          External policy-driven response engine. <span class="text-white">Decision-free</span> — Talos
+          only executes what your policies command.
+        </p>
+
+        <!-- CTA -->
+        <div class="flex justify-center mb-16">
+          <NotifyForm product="Talos" color="#f97316" placeholder="Be notified when ready" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Response Actions -->
+  <section class="py-24 border-t border-orange-500/10">
+    <div class="container-custom">
+      <div class="text-center mb-16">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Response <span class="text-orange-400">Actions</span>
+        </h2>
+        <p class="text-text-muted">Policies you define. Actions Talos executes.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+        <div
+          class="p-6 bg-surface/30 border border-surface-highlight rounded-lg text-center hover:border-orange-500/30 transition-all"
+        >
+          <div
+            class="w-12 h-12 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 mx-auto mb-4"
+          >
+            <Ban className="w-6 h-6" />
+          </div>
+          <h3 class="font-semibold mb-2">Block Source</h3>
+          <p class="text-sm text-text-muted">Temporary block by IP, user, or session</p>
+        </div>
+
+        <div
+          class="p-6 bg-surface/30 border border-surface-highlight rounded-lg text-center hover:border-orange-500/30 transition-all"
+        >
+          <div
+            class="w-12 h-12 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 mx-auto mb-4"
+          >
+            <Timer className="w-6 h-6" />
+          </div>
+          <h3 class="font-semibold mb-2">Throttle</h3>
+          <p class="text-sm text-text-muted">Aggressive rate limiting escalation</p>
+        </div>
+
+        <div
+          class="p-6 bg-surface/30 border border-surface-highlight rounded-lg text-center hover:border-orange-500/30 transition-all"
+        >
+          <div
+            class="w-12 h-12 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 mx-auto mb-4"
+          >
+            <ShieldAlert className="w-6 h-6" />
+          </div>
+          <h3 class="font-semibold mb-2">Challenge</h3>
+          <p class="text-sm text-text-muted">CAPTCHA or MFA prompt injection</p>
+        </div>
+
+        <div
+          class="p-6 bg-surface/30 border border-surface-highlight rounded-lg text-center hover:border-orange-500/30 transition-all"
+        >
+          <div
+            class="w-12 h-12 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 mx-auto mb-4"
+          >
+            <Bell className="w-6 h-6" />
+          </div>
+          <h3 class="font-semibold mb-2">Alert</h3>
+          <p class="text-sm text-text-muted">PagerDuty, Slack, webhook notifications</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Principle -->
+  <section
+    class="py-16 border-t border-surface-highlight bg-gradient-to-b from-transparent via-orange-500/5 to-transparent"
+  >
+    <div class="container-custom">
+      <div class="max-w-3xl mx-auto text-center">
+        <div
+          class="inline-block px-4 py-2 bg-surface border border-surface-highlight rounded text-sm font-mono text-text-muted mb-4"
+        >
+          CORE PRINCIPLE
+        </div>
+        <h3 class="text-xl font-bold mb-4">External Policy Control</h3>
+        <p class="text-text-muted mb-6">
+          Talos does <span class="text-white">not</span> make decisions. Your external policy engine evaluates
+          ThreatLedger statistics and issues commands. Talos only <span
+            class="text-orange-400 font-medium">executes</span
+          >.
+        </p>
+        <div
+          class="inline-block p-4 bg-surface border border-surface-highlight rounded-lg font-mono text-sm text-left max-w-md"
+        >
+          <div class="text-text-muted">ThreatLedger stats →</div>
+          <div class="text-orange-400">External Policy Engine →</div>
+          <div class="text-text-muted">"Block IP for 5 min" →</div>
+          <div class="text-white">Talos.execute()</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Back Link -->
+  <section class="py-12 border-t border-surface-highlight">
+    <div class="container-custom text-center">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 text-text-muted hover:text-white transition-colors"
+      >
+        <span>Back to Tracehound</span>
+        <ArrowRight className="w-4 h-4" />
+      </a>
+    </div>
+  </section>
+</ProductPageLayout>

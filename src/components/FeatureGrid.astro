@@ -1,42 +1,42 @@
 ---
-import { Clock, Database, Fingerprint, Lock, Server, ShieldAlert } from 'lucide-react'
+import { Bell, Clock, Database, Fingerprint, Lock, Snowflake } from 'lucide-react'
 
 const features = [
   {
-    icon: ShieldAlert,
+    icon: Database,
     title: 'Threat Quarantine',
     description:
-      'Suspicious requests are isolated immediately. Tracehound acts as a buffer, preventing potential exploits from reaching your core handlers.',
-  },
-  {
-    icon: Database,
-    title: 'Immutable Evidence',
-    description:
-      'Every quarantined request is cryptographically signed and stored. Create a tamper-proof audit trail for compliance and forensics.',
-  },
-  {
-    icon: Lock,
-    title: 'Zero Decisions',
-    description:
-      'Tracehound never guesses. It relies on deterministic rules or external signals, eliminating the risk of false positives blocking legitimate users.',
+      'When your WAF flags a threat, we capture and isolate it. Your app stays clean. The evidence stays intact.',
   },
   {
     icon: Fingerprint,
-    title: 'Content Signatures',
+    title: 'Immutable Audit Chain',
     description:
-      'Detect replay attacks and identical payloads instantly using content-based hashing and deduplication.',
+      'Every quarantined request is SHA-256 signed and Merkle-chained. Tamper-proof records for SOC2, HIPAA, and incident response.',
+  },
+  {
+    icon: Lock,
+    title: 'Decision-Free by Design',
+    description:
+      "We never guess. External detectors decide what's a threat — we just quarantine what they flag. Zero false positive risk.",
+  },
+  {
+    icon: Snowflake,
+    title: 'Cold Storage Export',
+    description:
+      'Evidence flows to S3, R2, or GCS automatically. Retention policies you define. No manual archiving.',
+  },
+  {
+    icon: Bell,
+    title: 'SIEM Integration',
+    description:
+      'Push events to Splunk, Elastic, or Datadog. Your SOC sees threats in real-time without polling.',
   },
   {
     icon: Clock,
-    title: 'Priority Eviction',
+    title: 'Bounded Memory',
     description:
-      'Smart buffer management ensures critical evidence is preserved while handling high-volume attacks without memory leaks.',
-  },
-  {
-    icon: Server,
-    title: 'Framework Agnostic',
-    description:
-      "Drop into Express, Fastify, or any Node.js framework. It's just a middleware that sits before your business logic.",
+      'Priority-based eviction ensures critical evidence survives. No memory leaks. No OOM crashes. Ever.',
   },
 ]
 ---
@@ -46,8 +46,9 @@ const features = [
     <div class="text-center mb-16">
       <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Why Tracehound?</h2>
       <p class="text-text-muted text-lg max-w-2xl mx-auto">
-        Traditional WAFs block requests and lose the context. Tracehound captures the context and
-        lets you analyze it safely.
+        Your WAF blocks threats. We <span class="text-primary font-medium"
+          >quarantine and preserve</span
+        > the evidence so you can analyze, comply, and prove what happened.
       </p>
     </div>
 

@@ -3,51 +3,20 @@ title: Getting Started
 description: Install and configure Tracehound in under 5 minutes.
 ---
 
-# Getting Started with Tracehound
+# Getting Started
 
-> **Tracehound**: Deterministic runtime security buffer for modern applications
+Get Tracehound running in your Node.js application in under 5 minutes.
 
-## What is Tracehound?
+## Prerequisites
 
-Tracehound is a **decision-free security buffer** that:
-
-- Quarantines threats detected by external systems (WAF, SIEM, custom rules)
-- Preserves evidence with cryptographic integrity
-- Provides audit chain for compliance
-- Operates without making security decisions itself
-
-**Tracehound does NOT:**
-
-- Detect threats (external detectors do this)
-- Make policy decisions
-- Inspect payload contents
-- Replace WAF/RASP systems
-
----
-
-## Architecture Overview
-
-```mermaid
-graph TD
-    External[External Detector WAF/ML] -->|Threat Signal| Agent
-    subgraph Tracehound
-        Agent[AGENT]
-        Quarantine[QUARANTINE]
-        Agent -->|intercept| Result{InterceptResult}
-        Agent -->|threat| Quarantine
-    end
-    Quarantine -->|Evidence| Storage[Evidence Storage]
-```
+- Node.js 18+
+- npm, pnpm, or yarn
 
 ---
 
 ## Installation
 
 ```bash
-# Using pnpm (recommended)
-pnpm add @tracehound/core
-
-# Using npm
 npm install @tracehound/core
 ```
 
@@ -55,108 +24,65 @@ npm install @tracehound/core
 
 ## Quick Start
 
-### 1. Create Tracehound Instance
+### Step 1: Create the Agent
 
 ```typescript
-import {
-  createAgent,
-  createQuarantine,
-  createRateLimiter,
-  createEvidenceFactory,
-  AuditChain,
-} from '@tracehound/core'
+import { createAgent, createQuarantine } from '@tracehound/core'
 
-// Initialize components
-const auditChain = new AuditChain()
-const quarantine = createQuarantine(
-  { maxCount: 1000, maxBytes: 100_000_000, evictionPolicy: 'priority' },
-  auditChain
-)
-const rateLimiter = createRateLimiter({
-  windowMs: 60_000,
-  maxRequests: 100,
-  blockDurationMs: 300_000,
-})
-const evidenceFactory = createEvidenceFactory()
-
-// Create agent
-const agent = createAgent({ maxPayloadSize: 1_000_000 }, quarantine, rateLimiter, evidenceFactory)
+const quarantine = createQuarantine({ maxCount: 1000 })
+const agent = createAgent({ quarantine })
 ```
 
-### 2. Intercept Requests
+That's it. You now have a working Tracehound instance.
+
+### Step 2: Intercept Requests
 
 ```typescript
-import type { Scent } from '@tracehound/core'
-
-// Your external detector determines if this is a threat
-const externalDetector = (req: Request): ThreatSignal | undefined => {
-  // WAF, ML model, regex rules, etc.
-  if (isSuspicious(req)) {
-    return { category: 'injection', severity: 'high' }
-  }
-  return undefined
-}
-
-// Create scent from request
-function createScent(req: Request): Scent {
-  const threat = externalDetector(req)
-
-  return {
-    id: generateSecureId(),
+app.use((req, res, next) => {
+  // Create a "scent" from the incoming request
+  const scent = {
+    id: crypto.randomUUID(),
     timestamp: Date.now(),
     source: req.ip,
-    payload: {
-      method: req.method,
-      path: req.path,
-      body: req.body,
-    },
-    threat, // undefined for clean requests
+    payload: { method: req.method, path: req.path },
+    threat: detectThreat(req), // Your WAF/detector logic
   }
-}
 
-// Intercept
-app.use((req, res, next) => {
-  const scent = createScent(req)
   const result = agent.intercept(scent)
 
-  switch (result.status) {
-    case 'clean':
-      next() // Proceed normally
-      break
-    case 'quarantined':
-      res.status(403).json({ error: 'Request quarantined' })
-      break
-    case 'rate_limited':
-      res.status(429).json({
-        error: 'Too many requests',
-        retryAfter: result.retryAfter,
-      })
-      break
-    case 'ignored':
-      // Duplicate threat, already quarantined
-      res.status(403).json({ error: 'Request blocked' })
-      break
+  if (result.status === 'quarantined') {
+    return res.status(403).json({ error: 'Blocked' })
   }
+
+  next()
 })
 ```
+
+### Step 3: Handle Results
+
+| Status         | Meaning            | Action                            |
+| -------------- | ------------------ | --------------------------------- |
+| `clean`        | No threat detected | Proceed normally                  |
+| `quarantined`  | Threat isolated    | Block request, evidence preserved |
+| `rate_limited` | Too many requests  | Return 429 with `retryAfter`      |
+| `ignored`      | Duplicate threat   | Already quarantined, block        |
 
 ---
 
-## Framework Adapters
+## Framework Shortcuts
+
+Don't want to write middleware yourself? Use our adapters:
 
 ### Express
 
 ```typescript
 import { createTracehoundMiddleware } from '@tracehound/express'
 
-const middleware = createTracehoundMiddleware({
-  maxPayloadSize: 1_000_000,
-  quarantine: { maxCount: 1000 },
-  rateLimit: { windowMs: 60_000, maxRequests: 100 },
-  detector: (req) => externalDetector(req),
-})
-
-app.use(middleware)
+app.use(
+  createTracehoundMiddleware({
+    detector: (req) => myWafCheck(req),
+  })
+)
 ```
 
 ### Fastify
@@ -165,79 +91,114 @@ app.use(middleware)
 import { tracehoundPlugin } from '@tracehound/fastify'
 
 fastify.register(tracehoundPlugin, {
-  maxPayloadSize: 1_000_000,
-  detector: (req) => externalDetector(req),
+  detector: (req) => myWafCheck(req),
 })
 ```
 
 ---
 
-## CLI Tool
+## Common Patterns
 
-```bash
-# Install CLI
-pnpm add @tracehound/cli
+### Pattern 1: WAF Integration
 
-# Commands
-tracehound status    # System status
-tracehound stats     # Threat statistics
-tracehound inspect   # Quarantine contents
-tracehound watch     # Live TUI dashboard
+Connect your existing WAF (Cloudflare, AWS WAF) to Tracehound:
+
+```typescript
+const detectThreat = (req) => {
+  // Check WAF headers set by your edge provider
+  if (req.headers['cf-threat-score'] > 50) {
+    return { category: 'suspicious', severity: 'medium' }
+  }
+  return undefined // Clean request
+}
+```
+
+### Pattern 2: Custom Rate Limiting
+
+Add rate limiting per source IP:
+
+```typescript
+import { createRateLimiter } from '@tracehound/core'
+
+const rateLimiter = createRateLimiter({
+  windowMs: 60_000, // 1 minute
+  maxRequests: 100, // 100 requests per minute
+  blockDurationMs: 300_000, // 5 minute block
+})
+
+const agent = createAgent({ quarantine, rateLimiter })
+```
+
+### Pattern 3: Cold Storage Export
+
+Automatically archive evidence to S3:
+
+```typescript
+import { createColdStorageAdapter } from '@tracehound/cold-s3'
+
+const coldStorage = createColdStorageAdapter({
+  bucket: 'my-evidence-bucket',
+  region: 'us-east-1',
+})
+
+// Evidence flows to S3 automatically when quarantine fills up
 ```
 
 ---
 
-## Core Concepts
+## Troubleshooting
 
-### Scent
+### "Quarantine is full" warnings
 
-The input data structure representing a request:
+Your quarantine has reached `maxCount`. Options:
 
-```typescript
-interface Scent {
-  id: string // Unique ID (UUIDv7)
-  timestamp: number // Unix timestamp
-  source: string // Client IP or identifier
-  payload: unknown // Request data
-  threat?: ThreatSignal // External detection result
-}
-```
+1. **Increase limit**: `createQuarantine({ maxCount: 5000 })`
+2. **Enable cold storage**: Evidence exports automatically
+3. **Change eviction policy**: `evictionPolicy: 'priority'` keeps high-severity threats
 
-### ThreatSignal
+### High memory usage
 
-Signal from external detector:
+Tracehound uses bounded memory by design. If you're seeing high usage:
 
-```typescript
-interface ThreatSignal {
-  category: string // e.g., 'injection', 'ddos'
-  severity: 'critical' | 'high' | 'medium' | 'low'
-  confidence?: number // 0-1
-  metadata?: Record<string, unknown>
-}
-```
+1. Reduce `maxBytes`: `createQuarantine({ maxBytes: 50_000_000 })` (50MB)
+2. Enable streaming codec for large payloads
+3. Check for payload size limits: `createAgent({ maxPayloadSize: 100_000 })`
 
-### InterceptResult
+### Requests are slow
 
-Result from `agent.intercept()`:
+`agent.intercept()` is synchronous and should be <1ms. If slow:
 
-```typescript
-type InterceptResult =
-  | { status: 'clean' }
-  | { status: 'quarantined'; handle: EvidenceHandle }
-  | { status: 'rate_limited'; retryAfter: number }
-  | { status: 'ignored'; reason: string }
-```
+1. Move heavy detection logic outside Tracehound
+2. Use `@tracehound/express` adapter (optimized)
+3. Check if you're doing async work inside the intercept call
 
 ---
 
 ## Next Steps
 
-- [Configuration Reference](/docs/configuration)
-- [API Documentation](/docs/api)
-- [Roadmap](/docs/roadmap)
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+
+**[Configuration →](/docs/configuration)**
+Tune quarantine, rate limiting, and fail-safe settings.
+
+**[API Reference →](/docs/api)**
+Full API documentation for all components.
+
+**[Roadmap →](/docs/roadmap)**
+See what's coming in future releases.
+
+</div>
 
 ---
 
-## License
+## Pricing
 
-Commercial (Enterprise / Premium)
+Tracehound offers three tiers:
+
+| Tier           | Price    | Best For                             |
+| -------------- | -------- | ------------------------------------ |
+| **Community**  | Free     | Developers, POC, non-commercial      |
+| **Pro**        | $79/mo   | Growing SaaS, startups               |
+| **Enterprise** | $499+/mo | Scale-up, compliance, multi-instance |
+
+[View full pricing →](/#pricing)

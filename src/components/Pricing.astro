@@ -1,78 +1,65 @@
 ---
-import { AlertTriangle, Check, X } from 'lucide-react'
+import { Check, X, Zap } from 'lucide-react'
 
-// Updated data structure for detailed pricing
-// Updated data structure for detailed pricing
+// New pricing model: Per Service, Self-Service / Low-Friction
 const tiers = [
   {
-    name: 'Tracehound Core',
-    subtitle: 'Deterministic Runtime Component',
-    price: '$299',
-    period: '/ month',
-    tagline: 'You get the engine. You own the operational envelope.',
-    guaranteed: [
-      'Deterministic execution under normal and degraded conditions',
-      'Explicit memory ownership and bounded degradation',
-      'Configurable quarantine and cold storage primitives',
-      'Fire-and-forget evidence persistence (write-only, no read-back)',
+    name: 'Community',
+    subtitle: 'Developer / POC',
+    price: 'Free',
+    period: '',
+    features: [
+      { text: 'Single instance (local state)', included: true },
+      { text: 'Core protections (Rate Limit, Agent)', included: true },
+      { text: 'In-memory state only', included: true },
+      { text: 'Non-commercial or Revenue < $5k/mo', included: true },
+      { text: 'Cold Storage', included: false },
+      { text: 'Notification API', included: false },
+      { text: 'Support', included: false },
     ],
-    notGuaranteed: [
-      'Backward compatibility across minor versions',
-      'Stable event contracts',
-      'Adapter behavior consistency',
-    ],
-    failure: [
-      'System prioritizes liveness over completeness',
-      'Degradation may reduce observability, never application availability',
-      'No failure propagates into the request lifecycle',
-    ],
-    who: 'Teams embedding Tracehound as an internal security primitive',
-    cta: 'Get Core',
+    who: 'Developers, Hobbyists, POC',
+    cta: 'npm install',
+    ctaLink: 'https://github.com/laphilosophia/tracehound',
     highlight: false,
     borderColor: 'border-surface-highlight',
   },
   {
-    name: 'Tracehound Production',
-    subtitle: 'Operational Stability Contract',
-    price: '$799',
-    period: '/ month',
-    tagline: 'You are no longer testing how the system behaves. You are relying on it.',
-    guaranteed: [
-      'Backward-compatible contracts for events & notifications',
-      'Defined failure behavior under memory pressure',
-      'Upgrade-safe releases with no silent semantic changes',
+    name: 'Pro',
+    subtitle: 'Growing SaaS',
+    price: '$79',
+    period: '/ month per service',
+    features: [
+      { text: 'Single instance', included: true },
+      { text: 'Notification API (SIEM, SOC, webhooks)', included: true },
+      { text: 'Async Codec (streaming compression)', included: true },
+      { text: 'Evidence Export (S3, R2, GCS)', included: true },
+      { text: 'Retention & Eviction Policies', included: true },
+      { text: 'Email Support (24h SLA)', included: true },
+      { text: 'Commercial License', included: true },
     ],
-    notGuaranteed: [],
-    failure: [
-      'Degradation is explicit and bounded',
-      'Adapter failures degrade safely, never silently',
-      'Runtime behavior remains consistent across patch upgrades',
-    ],
-    who: 'Production SaaS systems requiring operational predictability',
-    cta: 'Get Production',
+    who: 'Growing SaaS, Bootstrapped Startups',
+    cta: 'Get Started',
+    ctaLink: '#',
     highlight: true,
     borderColor: 'border-primary',
   },
   {
-    name: 'Tracehound Enterprise',
-    subtitle: 'Compliance & Forensics Substrate',
-    price: '~$1,499',
+    name: 'Enterprise',
+    subtitle: 'Cluster / High Scale',
+    price: '$499+',
     period: '/ month',
-    tagline: 'This is not observability. This is record-keeping under pressure.',
-    guaranteed: [
-      'Deterministic snapshot export for offline verification',
-      'Stable evidence descriptors suitable for audits',
-      'RFC-level guarantees on data shape and behavior',
-      'Long-term support branches with frozen semantics',
+    features: [
+      { text: 'Multi-Instance (Redis coordination)', included: true },
+      { text: 'Distributed state', included: true },
+      { text: 'SIEM Integration (Splunk, Elastic, Datadog)', included: true },
+      { text: 'Compliance Reports (SOC2, HIPAA)', included: true },
+      { text: 'Priority Support / Slack', included: true },
+      { text: 'SLA Guarantee', included: true },
+      { text: 'Argos included', included: true },
     ],
-    notGuaranteed: [],
-    failure: [
-      'Evidence integrity is preserved even under forced degradation',
-      'All degradation paths are explainable and reviewable',
-      'Operational behavior is traceable across versions',
-    ],
-    who: 'Regulated environments (fintech, payments, healthcare)',
+    who: 'Scale-up, Fintech, High-Traffic E-commerce',
     cta: 'Contact Sales',
+    ctaLink: '#',
     highlight: false,
     borderColor: 'border-surface-highlight',
   },
@@ -83,11 +70,10 @@ const tiers = [
   <div class="container-custom">
     <div class="text-center max-w-2xl mx-auto mb-16">
       <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">
-        Pricing based on <span class="text-primary">risk ownership</span>.
+        Simple <span class="text-primary">per-service</span> pricing.
       </h2>
       <p class="text-text-muted text-lg">
-        You are not paying for features. You are paying for us to take responsibility for
-        what happens when your runtime degrades.
+        No request counting. No surprise bills. One price per logical service.
       </p>
     </div>
 
@@ -95,11 +81,10 @@ const tiers = [
       {
         tiers.map((tier) => (
           <div
-            class={`relative flex flex-col bg-surface/50 border ${tier.borderColor} ${tier.highlight ? 'border-primary ring-1 ring-primary/20' : ''} ${tier.highlight ? 'border-dashed' : 'border-dotted'} p-8 hover:bg-surface/80 transition-colors rounded-sm`}
-          >
+            class={`relative flex flex-col bg-surface/50 border ${tier.borderColor} ${tier.highlight ? 'border-primary ring-1 ring-primary/20' : ''} ${tier.highlight ? 'border-dashed' : 'border-dotted'} p-8 hover:bg-surface/80 transition-colors rounded-sm`}>
             {tier.highlight && (
-               <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-background px-3 py-0.5 text-xs font-bold uppercase tracking-wider rounded-sm">
-                Recommended
+              <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-background px-3 py-0.5 text-xs font-bold uppercase tracking-wider rounded-sm flex items-center gap-1">
+                <Zap className="h-3 w-3" /> For Growing SaaS
               </div>
             )}
 
@@ -108,79 +93,76 @@ const tiers = [
               <p class="text-sm text-text-muted mb-6 font-mono">{tier.subtitle}</p>
               <div class="flex items-baseline gap-1">
                 <span class="text-4xl font-bold text-white tracking-tight">{tier.price}</span>
-                <span class="text-sm text-text-muted font-mono">{tier.period}</span>
+                {tier.period && (
+                  <span class="text-sm text-text-muted font-mono">{tier.period}</span>
+                )}
               </div>
             </div>
 
-            <div class="space-y-8 flex-1">
-               <!-- Guaranteed -->
-               <div>
-                  <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4 flex items-center gap-2 font-mono">
-                    <Check className="h-4 w-4 text-primary" /> Guaranteed
-                  </h4>
-                  <ul class="space-y-2">
-                    {tier.guaranteed.map((item) => (
-                      <li class="text-sm text-text-muted flex items-start gap-2">
-                         <span class="w-1 h-1 rounded-full bg-primary/50 mt-2 shrink-0"></span>
-                         {item}
-                      </li>
-                    ))}
-                  </ul>
-               </div>
+            <div class="space-y-4 flex-1">
+              <ul class="space-y-3">
+                {tier.features.map((feature) => (
+                  <li
+                    class={`text-sm flex items-start gap-3 ${feature.included ? 'text-text-muted' : 'text-text-muted/40'}`}>
+                    {feature.included ? (
+                      <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                    ) : (
+                      <X className="h-4 w-4 text-text-muted/30 shrink-0 mt-0.5" />
+                    )}
+                    <span>{feature.text}</span>
+                  </li>
+                ))}
+              </ul>
 
-               <!-- Not Guaranteed (if any) -->
-               {tier.notGuaranteed.length > 0 && (
-                 <div>
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-text-muted mb-4 flex items-center gap-2 font-mono">
-                      <X className="h-4 w-4 text-text-muted" /> Not Guaranteed
-                    </h4>
-                    <ul class="space-y-2">
-                      {tier.notGuaranteed.map((item) => (
-                        <li class="text-sm text-text-muted/60 flex items-start gap-2">
-                           <span class="w-1 h-1 rounded-full bg-text-muted/30 mt-2 shrink-0"></span>
-                           {item}
-                        </li>
-                      ))}
-                    </ul>
-                 </div>
-               )}
-
-               <!-- Failure Mode -->
-               <div>
-                  <h4 class="text-xs font-bold uppercase tracking-wider text-orange-400 mb-4 flex items-center gap-2 font-mono">
-                    <AlertTriangle className="h-4 w-4 text-orange-400" /> Failure Behavior
-                  </h4>
-                  <ul class="space-y-2">
-                    {tier.failure.map((item) => (
-                      <li class="text-sm text-text-muted flex items-start gap-2">
-                         <span class="w-1 h-1 rounded-full bg-orange-400/50 mt-2 shrink-0"></span>
-                         {item}
-                      </li>
-                    ))}
-                  </ul>
-               </div>
-
-               <div class="pt-6 border-t border-white/5">
-                 <p class="text-xs font-mono text-primary italic mb-2">"{tier.tagline}"</p>
-                 <p class="text-xs text-text-muted">Best for: {tier.who}</p>
-               </div>
+              <div class="pt-6 border-t border-white/5">
+                <p class="text-xs text-text-muted">
+                  Best for: <span class="text-white">{tier.who}</span>
+                </p>
+              </div>
             </div>
 
-            <div class="mt-8 pt-8">
+            <div class="mt-8 pt-4">
               <a
-                href="#"
+                href={tier.ctaLink}
                 class={`block w-full py-3 px-4 text-center text-sm font-bold uppercase tracking-wider rounded-sm transition-all ${
                   tier.highlight
                     ? 'bg-primary text-background hover:bg-primary/90 shadow-[0_0_20px_rgba(242,201,76,0.2)]'
                     : 'bg-surface-highlight text-white hover:bg-surface-highlight/80 border border-white/5'
-                }`}
-              >
+                }`}>
                 {tier.cta}
               </a>
             </div>
           </div>
         ))
       }
+    </div>
+
+    <!-- Argos Section -->
+    <div class="mt-16 p-8 bg-purple-500/5 border border-dashed border-purple-500/30 rounded-sm">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div>
+          <div
+            class="inline-flex items-center gap-2 px-2 py-0.5 mb-3 text-xs font-mono text-purple-400 bg-purple-500/10 border border-purple-500/20 rounded-sm"
+          >
+            SEPARATE PRODUCT
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2 font-mono">Argos Runtime Observer</h3>
+          <p class="text-text-muted text-sm max-w-lg">
+            Event loop monitoring, runtime behavior analysis, anomaly detection.<br /> Works standalone
+            or as Tracehound add-on.
+          </p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 text-sm font-mono">
+          <div class="px-4 py-3 bg-surface/50 border border-purple-500/20 rounded-sm text-center">
+            <div class="text-purple-400 font-bold">$49/mo</div>
+            <div class="text-text-muted text-xs">Standalone</div>
+          </div>
+          <div class="px-4 py-3 bg-surface/50 border border-purple-500/20 rounded-sm text-center">
+            <div class="text-purple-400 font-bold">+$29/mo</div>
+            <div class="text-text-muted text-xs">With Pro tier</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

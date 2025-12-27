@@ -1,0 +1,179 @@
+---
+import { Archive, ArrowRight, Database, TrendingUp } from 'lucide-react'
+import NotifyForm from '../components/NotifyForm.astro'
+import ProductPageLayout from '../layouts/ProductPageLayout.astro'
+---
+
+<ProductPageLayout
+  title="Muninn | Threat Metadata Archive"
+  description="Threat metadata substrate for research, ML training, and pattern correlation. The memory that never forgets."
+  product="muninn"
+  status="coming-soon"
+  color="#10b981"
+>
+  <!-- Hero Section -->
+  <section class="relative py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent"></div>
+    <div class="container-custom relative">
+      <div class="max-w-4xl mx-auto text-center">
+        <!-- Status Badge -->
+        <div
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-sm font-medium mb-8"
+        >
+          <span class="w-2 h-2 bg-emerald-400 rounded-full"></span>
+          Coming Q2 2026
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+          <span class="text-emerald-400">Muninn</span><br />
+          <span class="text-text-muted">The Memory Keeper</span>
+        </h1>
+
+        <p class="text-xl text-text-muted max-w-2xl mx-auto mb-6 leading-relaxed">
+          In Norse mythology, <span class="text-emerald-400 font-medium">Muninn</span> ("Memory") is Odin's
+          raven that remembers everything. Our Muninn preserves threat metadata, patterns, and timelines
+          — a memory that never forgets.
+        </p>
+
+        <p class="text-lg text-text-muted max-w-xl mx-auto mb-12">
+          Threat metadata substrate for research, ML training, and pattern correlation. See the <em
+            class="text-white not-italic">history</em
+          > of attacks, not just the latest.
+        </p>
+
+        <!-- CTA -->
+        <div class="flex justify-center mb-16">
+          <NotifyForm product="Muninn" color="#10b981" placeholder="Be notified when ready" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3-Layer Architecture Preview -->
+  <section class="py-24 border-t border-emerald-500/10">
+    <div class="container-custom">
+      <div class="text-center mb-16">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Three-Layer <span class="text-emerald-400">Storage</span>
+        </h2>
+      </div>
+
+      <div class="max-w-3xl mx-auto space-y-4">
+        <!-- Hot Layer -->
+        <div
+          class="p-6 bg-surface/30 border border-emerald-500/20 rounded-lg hover:border-emerald-500/40 transition-all"
+        >
+          <div class="flex items-center gap-4">
+            <div
+              class="w-12 h-12 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 shrink-0"
+            >
+              <TrendingUp className="w-6 h-6" />
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-1">
+                <h3 class="font-semibold">Hot Layer</h3>
+                <span class="text-xs px-2 py-0.5 bg-red-500/10 text-red-400 rounded">In-Memory</span
+                >
+              </div>
+              <p class="text-sm text-text-muted">
+                Real-time query (O(1) lookup), pattern detection, 1-hour TTL, 10k record limit
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cold Layer -->
+        <div
+          class="p-6 bg-surface/30 border border-emerald-500/20 rounded-lg hover:border-emerald-500/40 transition-all"
+        >
+          <div class="flex items-center gap-4">
+            <div
+              class="w-12 h-12 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0"
+            >
+              <Database className="w-6 h-6" />
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-1">
+                <h3 class="font-semibold">Cold Layer</h3>
+                <span class="text-xs px-2 py-0.5 bg-blue-500/10 text-blue-400 rounded">NDJSON</span>
+              </div>
+              <p class="text-sm text-text-muted">
+                Operational logs, append-only, external tool compatible (jq, grep, etc.)
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Archive Layer -->
+        <div
+          class="p-6 bg-surface/30 border border-emerald-500/20 rounded-lg hover:border-emerald-500/40 transition-all"
+        >
+          <div class="flex items-center gap-4">
+            <div
+              class="w-12 h-12 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0"
+            >
+              <Archive className="w-6 h-6" />
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-1">
+                <h3 class="font-semibold">Archive Layer</h3>
+                <span class="text-xs px-2 py-0.5 bg-emerald-500/10 text-emerald-400 rounded"
+                  >Compressed</span
+                >
+              </div>
+              <p class="text-sm text-text-muted">
+                Research data, ML training, pattern analysis, integrity-hashed
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Planned Capabilities -->
+  <section
+    class="py-24 border-t border-surface-highlight bg-gradient-to-b from-transparent via-emerald-500/5 to-transparent"
+  >
+    <div class="container-custom">
+      <div class="text-center mb-16">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Planned <span class="text-emerald-400">Capabilities</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+        <div class="p-5 bg-surface/30 border border-surface-highlight rounded-lg text-center">
+          <div class="text-emerald-400 font-mono text-sm mb-2">Classification</div>
+          <p class="text-xs text-text-muted">Signature, category, severity tracking</p>
+        </div>
+        <div class="p-5 bg-surface/30 border border-surface-highlight rounded-lg text-center">
+          <div class="text-emerald-400 font-mono text-sm mb-2">Correlation</div>
+          <p class="text-xs text-text-muted">Source tracking, co-occurrence detection</p>
+        </div>
+        <div class="p-5 bg-surface/30 border border-surface-highlight rounded-lg text-center">
+          <div class="text-emerald-400 font-mono text-sm mb-2">Temporal</div>
+          <p class="text-xs text-text-muted">Frequency, burst detection, lifespan</p>
+        </div>
+        <div class="p-5 bg-surface/30 border border-surface-highlight rounded-lg text-center">
+          <div class="text-emerald-400 font-mono text-sm mb-2">Research</div>
+          <p class="text-xs text-text-muted">Archive for anti-malware development</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Back Link -->
+  <section class="py-12 border-t border-surface-highlight">
+    <div class="container-custom text-center">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 text-text-muted hover:text-white transition-colors"
+      >
+        <span>Back to Tracehound</span>
+        <ArrowRight className="w-4 h-4" />
+      </a>
+    </div>
+  </section>
+</ProductPageLayout>

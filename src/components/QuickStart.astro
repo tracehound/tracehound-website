@@ -1,0 +1,105 @@
+---
+import { Copy, Terminal } from 'lucide-react'
+---
+
+<section class="py-24 border-b border-dashed border-surface-highlight">
+  <div class="container-custom">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+          Get started in <span class="text-primary">60 seconds</span>
+        </h2>
+        <p class="text-text-muted text-lg">
+          Three lines of code. That's all it takes to start quarantining threats.
+        </p>
+      </div>
+
+      <!-- Code Block -->
+      <div
+        class="relative bg-background border border-surface-highlight rounded-sm overflow-hidden"
+      >
+        <!-- Header -->
+        <div
+          class="flex items-center justify-between px-4 py-3 border-b border-surface-highlight bg-surface/30"
+        >
+          <div class="flex items-center gap-2">
+            <Terminal className="w-4 h-4 text-text-muted" />
+            <span class="text-sm font-mono text-text-muted">app.ts</span>
+          </div>
+          <button
+            id="copy-btn"
+            class="text-xs text-text-muted hover:text-primary transition-colors flex items-center gap-1"
+          >
+            <Copy className="w-3 h-3" />
+            Copy
+          </button>
+        </div>
+
+        <!-- Code -->
+        <div class="p-6 overflow-x-auto">
+          <pre
+            class="text-sm font-mono leading-relaxed"
+            id="code-block"><span class="text-purple-400">import</span> {'{'} createAgent, createQuarantine {'}'} <span class="text-purple-400">from</span> <span class="text-green-400">'@tracehound/core'</span>
+
+<span class="text-text-muted">// Initialize with defaults</span>
+<span class="text-purple-400">const</span> quarantine = createQuarantine({'{'} maxCount: <span class="text-orange-400">1000</span> {'}'})
+<span class="text-purple-400">const</span> agent = createAgent({'{'} quarantine {'}'})
+
+<span class="text-text-muted">// In your middleware</span>
+app.use((req, res, next) =&gt; {'{'}
+  <span class="text-purple-400">const</span> result = agent.intercept(createScent(req))
+
+  <span class="text-purple-400">if</span> (result.status === <span class="text-green-400">'quarantined'</span>) {'{'}
+    <span class="text-purple-400">return</span> res.status(<span class="text-orange-400">403</span>).json({'{'} error: <span class="text-green-400">'Blocked'</span> {'}'})
+  {'}'}
+
+  next()
+{'}'})</pre>
+        </div>
+      </div>
+
+      <!-- Install Command -->
+      <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div
+          class="flex items-center gap-2 px-4 py-2 bg-surface/50 border border-surface-highlight rounded-sm font-mono text-sm"
+        >
+          <span class="text-text-muted">$</span>
+          <span class="text-white">npm install @tracehound/core</span>
+        </div>
+        <a
+          href="/docs/getting-started"
+          class="text-primary hover:text-primary/80 text-sm font-medium transition-colors"
+        >
+          Read the full guide →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.getElementById('copy-btn')?.addEventListener('click', () => {
+    const code = `import { createAgent, createQuarantine } from '@tracehound/core'
+
+const quarantine = createQuarantine({ maxCount: 1000 })
+const agent = createAgent({ quarantine })
+
+app.use((req, res, next) => {
+  const result = agent.intercept(createScent(req))
+
+  if (result.status === 'quarantined') {
+    return res.status(403).json({ error: 'Blocked' })
+  }
+
+  next()
+})`
+    navigator.clipboard.writeText(code)
+    const btn = document.getElementById('copy-btn')
+    if (btn) {
+      btn.textContent = 'Copied!'
+      setTimeout(() => {
+        btn.textContent = 'Copy'
+      }, 2000)
+    }
+  })
+</script>

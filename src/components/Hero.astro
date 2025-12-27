@@ -1,12 +1,16 @@
 ---
 import { ArrowRight, Terminal } from 'lucide-react'
+import CyberBackground from './CyberBackground'
 ---
 
 <section
   class="relative overflow-hidden pt-32 pb-24 border-b border-dashed border-surface-highlight"
 >
-  <!-- Background effects -->
-  <div class="absolute inset-0 z-0 bg-grid-pattern opacity-[0.4] mask-image-gradient"></div>
+  <!-- Animated Cyber Background -->
+  <CyberBackground client:load />
+
+  <!-- Static grid overlay -->
+  <div class="absolute inset-0 z-0 bg-grid-pattern opacity-[0.2] mask-image-gradient"></div>
 
   <!-- Content -->
   <div class="container-custom relative z-10">
