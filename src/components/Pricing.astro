@@ -1,0 +1,96 @@
+---
+import { Check } from 'lucide-react'
+
+const tiers = [
+  {
+    name: 'Starter',
+    price: '$199',
+    description: 'Essential fallback protection for growing apps.',
+    features: [
+      'Up to 1M requests/month',
+      '7-day evidence retention',
+      'Basic Quarantine',
+      'Community Support',
+    ],
+    cta: 'Start Trial',
+    popular: false,
+  },
+  {
+    name: 'Pro',
+    price: '$499',
+    description: 'Advanced forensics and higher volume for SaaS.',
+    features: [
+      'Up to 10M requests/month',
+      '30-day evidence retention',
+      'Priority Eviction Policy',
+      'Cold Storage Export',
+      'Email Support',
+    ],
+    cta: 'Get Started',
+    popular: true,
+  },
+  {
+    name: 'Enterprise',
+    price: '$999',
+    description: 'Full compliance suite and dedicated support.',
+    features: [
+      'Unlimited requests',
+      '1-year evidence retention',
+      'Custom SLA',
+      'SOC2 / HIPAA Audit Reports',
+      'Dedicated Success Manager',
+    ],
+    cta: 'Contact Sales',
+    popular: false,
+  },
+]
+---
+
+<section class="py-24" id="pricing">
+  <div class="container-custom">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-5xl font-bold mb-6">Simple, Predictable Pricing</h2>
+      <p class="text-text-muted text-lg max-w-2xl mx-auto">
+        Enterprise-grade security buffer without the enterprise sales friction.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {
+        tiers.map((tier) => (
+          <div
+            class={`relative p-8 rounded-2xl border ${tier.popular ? 'border-primary bg-primary/5' : 'border-surface-highlight bg-surface/30'} flex flex-col`}>
+            {tier.popular && (
+              <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-background text-sm font-bold rounded-full">
+                Most Popular
+              </div>
+            )}
+
+            <div class="mb-8">
+              <h3 class="text-lg font-medium text-text-muted mb-2">{tier.name}</h3>
+              <div class="flex items-baseline gap-1">
+                <span class="text-4xl font-bold text-white">{tier.price}</span>
+                <span class="text-text-muted">/mo</span>
+              </div>
+              <p class="mt-4 text-sm text-text-muted">{tier.description}</p>
+            </div>
+
+            <ul class="flex-1 space-y-4 mb-8">
+              {tier.features.map((feature) => (
+                <li class="flex items-start gap-3 text-sm">
+                  <Check className="h-5 w-5 text-primary shrink-0" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            <button
+              class={`w-full py-3 rounded-lg font-medium transition-colors ${tier.popular ? 'bg-primary text-background hover:bg-primary/90' : 'bg-surface-highlight text-white hover:bg-surface-highlight/80'}`}>
+              {tier.cta}
+            </button>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

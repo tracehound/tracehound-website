@@ -1,0 +1,25 @@
+---
+import FeatureGrid from '../components/FeatureGrid.astro'
+import Hero from '../components/Hero.astro'
+import InteractiveArchitecture from '../components/InteractiveArchitecture'
+import Navbar from '../components/Navbar.astro'
+import Pricing from '../components/Pricing.astro'
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout title="Tracehound | Security Buffer">
+  <Navbar />
+  <main class="flex-1">
+    <Hero />
+    <InteractiveArchitecture client:visible />
+    <FeatureGrid />
+    <Pricing />
+
+    <!-- Footer Coming Soon -->
+  </main>
+  <footer class="py-6 border-t border-surface-highlight text-center text-text-muted text-sm">
+    <div class="container-custom">
+      &copy; {new Date().getFullYear()} Tracehound. MIT License.
+    </div>
+  </footer>
+</Layout>
