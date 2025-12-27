@@ -1,6 +1,6 @@
 ---
 title: Getting Started
-description: Getting Started with Tracehound - Deterministic runtime security buffer
+description: Install and configure Tracehound in under 5 minutes.
 ---
 
 # Getting Started with Tracehound
@@ -27,39 +27,29 @@ Tracehound is a **decision-free security buffer** that:
 
 ## Architecture Overview
 
-\`\`\`
-External Detector (WAF, ML, Rules)
-│
-│ Threat Signal
-▼
-┌─────────────────────────────────────────────────┐
-│ TRACEHOUND │
-│ ┌──────────────────────────────────────────┐ │
-│ │ AGENT │ │
-│ │ intercept(request) → InterceptResult │ │
-│ └───────────────┬──────────────────────────┘ │
-│ │ │
-│ ┌───────────────▼──────────────────────────┐ │
-│ │ QUARANTINE │ │
-│ │ Evidence storage + Audit chain │ │
-│ └──────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────┘
-\`\`\`
+```mermaid
+graph TD
+    External[External Detector WAF/ML] -->|Threat Signal| Agent
+    subgraph Tracehound
+        Agent[AGENT]
+        Quarantine[QUARANTINE]
+        Agent -->|intercept| Result{InterceptResult}
+        Agent -->|threat| Quarantine
+    end
+    Quarantine -->|Evidence| Storage[Evidence Storage]
+```
 
 ---
 
 ## Installation
 
-\`\`\`bash
-
+```bash
 # Using pnpm (recommended)
-
 pnpm add @tracehound/core
 
 # Using npm
-
 npm install @tracehound/core
-\`\`\`
+```
 
 ---
 
@@ -67,88 +57,88 @@ npm install @tracehound/core
 
 ### 1. Create Tracehound Instance
 
-\`\`\`typescript
+```typescript
 import {
-createAgent,
-createQuarantine,
-createRateLimiter,
-createEvidenceFactory,
-AuditChain,
+  createAgent,
+  createQuarantine,
+  createRateLimiter,
+  createEvidenceFactory,
+  AuditChain,
 } from '@tracehound/core'
 
 // Initialize components
 const auditChain = new AuditChain()
 const quarantine = createQuarantine(
-{ maxCount: 1000, maxBytes: 100_000_000, evictionPolicy: 'priority' },
-auditChain
+  { maxCount: 1000, maxBytes: 100_000_000, evictionPolicy: 'priority' },
+  auditChain
 )
 const rateLimiter = createRateLimiter({
-windowMs: 60_000,
-maxRequests: 100,
-blockDurationMs: 300_000,
+  windowMs: 60_000,
+  maxRequests: 100,
+  blockDurationMs: 300_000,
 })
 const evidenceFactory = createEvidenceFactory()
 
 // Create agent
 const agent = createAgent({ maxPayloadSize: 1_000_000 }, quarantine, rateLimiter, evidenceFactory)
-\`\`\`
+```
 
 ### 2. Intercept Requests
 
-\`\`\`typescript
+```typescript
 import type { Scent } from '@tracehound/core'
 
 // Your external detector determines if this is a threat
 const externalDetector = (req: Request): ThreatSignal | undefined => {
-// WAF, ML model, regex rules, etc.
-if (isSuspicious(req)) {
-return { category: 'injection', severity: 'high' }
-}
-return undefined
+  // WAF, ML model, regex rules, etc.
+  if (isSuspicious(req)) {
+    return { category: 'injection', severity: 'high' }
+  }
+  return undefined
 }
 
 // Create scent from request
 function createScent(req: Request): Scent {
-const threat = externalDetector(req)
+  const threat = externalDetector(req)
 
-return {
-id: generateSecureId(),
-timestamp: Date.now(),
-source: req.ip,
-payload: {
-method: req.method,
-path: req.path,
-body: req.body,
-},
-threat, // undefined for clean requests
-}
+  return {
+    id: generateSecureId(),
+    timestamp: Date.now(),
+    source: req.ip,
+    payload: {
+      method: req.method,
+      path: req.path,
+      body: req.body,
+    },
+    threat, // undefined for clean requests
+  }
 }
 
 // Intercept
 app.use((req, res, next) => {
-const scent = createScent(req)
-const result = agent.intercept(scent)
+  const scent = createScent(req)
+  const result = agent.intercept(scent)
 
-switch (result.status) {
-case 'clean':
-next() // Proceed normally
-break
-case 'quarantined':
-res.status(403).json({ error: 'Request quarantined' })
-break
-case 'rate_limited':
-res.status(429).json({
-error: 'Too many requests',
-retryAfter: result.retryAfter,
+  switch (result.status) {
+    case 'clean':
+      next() // Proceed normally
+      break
+    case 'quarantined':
+      res.status(403).json({ error: 'Request quarantined' })
+      break
+    case 'rate_limited':
+      res.status(429).json({
+        error: 'Too many requests',
+        retryAfter: result.retryAfter,
+      })
+      break
+    case 'ignored':
+      // Duplicate threat, already quarantined
+      res.status(403).json({ error: 'Request blocked' })
+      break
+  }
 })
-break
-case 'ignored':
-// Duplicate threat, already quarantined
-res.status(403).json({ error: 'Request blocked' })
-break
-}
-})
-\`\`\`
+```
 
 ---
 
@@ -156,47 +146,44 @@ break
 
 ### Express
 
-\`\`\`typescript
+```typescript
 import { createTracehoundMiddleware } from '@tracehound/express'
 
 const middleware = createTracehoundMiddleware({
-maxPayloadSize: 1_000_000,
-quarantine: { maxCount: 1000 },
-rateLimit: { windowMs: 60_000, maxRequests: 100 },
-detector: (req) => externalDetector(req),
+  maxPayloadSize: 1_000_000,
+  quarantine: { maxCount: 1000 },
+  rateLimit: { windowMs: 60_000, maxRequests: 100 },
+  detector: (req) => externalDetector(req),
 })
 
 app.use(middleware)
-\`\`\`
+```
 
 ### Fastify
 
-\`\`\`typescript
+```typescript
 import { tracehoundPlugin } from '@tracehound/fastify'
 
 fastify.register(tracehoundPlugin, {
-maxPayloadSize: 1_000_000,
-detector: (req) => externalDetector(req),
+  maxPayloadSize: 1_000_000,
+  detector: (req) => externalDetector(req),
 })
-\`\`\`
+```
 
 ---
 
 ## CLI Tool
 
-\`\`\`bash
-
+```bash
 # Install CLI
-
 pnpm add @tracehound/cli
 
 # Commands
-
-tracehound status # System status
-tracehound stats # Threat statistics
-tracehound inspect # Quarantine contents
-tracehound watch # Live TUI dashboard
-\`\`\`
+tracehound status    # System status
+tracehound stats     # Threat statistics
+tracehound inspect   # Quarantine contents
+tracehound watch     # Live TUI dashboard
+```
 
 ---
 
@@ -206,45 +193,51 @@ tracehound watch # Live TUI dashboard
 
 The input data structure representing a request:
 
-\`\`\`typescript
+```typescript
 interface Scent {
-id: string // Unique ID (UUIDv7)
-timestamp: number // Unix timestamp
-source: string // Client IP or identifier
-payload: unknown // Request data
-threat?: ThreatSignal // External detection result
+  id: string // Unique ID (UUIDv7)
+  timestamp: number // Unix timestamp
+  source: string // Client IP or identifier
+  payload: unknown // Request data
+  threat?: ThreatSignal // External detection result
 }
-\`\`\`
+```
 
 ### ThreatSignal
 
 Signal from external detector:
 
-\`\`\`typescript
+```typescript
 interface ThreatSignal {
-category: string // e.g., 'injection', 'ddos'
-severity: 'critical' | 'high' | 'medium' | 'low'
-confidence?: number // 0-1
-metadata?: Record<string, unknown>
+  category: string // e.g., 'injection', 'ddos'
+  severity: 'critical' | 'high' | 'medium' | 'low'
+  confidence?: number // 0-1
+  metadata?: Record<string, unknown>
 }
-\`\`\`
+```
 
 ### InterceptResult
 
-Result from \`agent.intercept()\`:
+Result from `agent.intercept()`:
 
-\`\`\`typescript
+```typescript
 type InterceptResult =
-| { status: 'clean' }
-| { status: 'quarantined'; handle: EvidenceHandle }
-| { status: 'rate_limited'; retryAfter: number }
-| { status: 'ignored'; reason: string }
-\`\`\`
+  | { status: 'clean' }
+  | { status: 'quarantined'; handle: EvidenceHandle }
+  | { status: 'rate_limited'; retryAfter: number }
+  | { status: 'ignored'; reason: string }
+```
 
 ---
 
 ## Next Steps
 
-- [Configuration Reference](./configuration)
-- [API Documentation](./api)
-- [Roadmap](./roadmap)
+- [Configuration Reference](/docs/configuration)
+- [API Documentation](/docs/api)
+- [Roadmap](/docs/roadmap)
+
+---
+
+## License
+
+Commercial (Enterprise / Premium)

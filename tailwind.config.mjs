@@ -4,14 +4,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#0a0a0a',
-        surface: '#121212',
-        primary: '#00ff94', // Cyber Green
-        secondary: '#00b8ff', // Cyber Blue
-        accent: '#ff0055', // Cyber Red/Pink
-        'surface-highlight': '#1E1E1E',
-        text: '#e0e0e0',
-        'text-muted': '#a0a0a0',
+        background: '#080808', // Darker, sharper black
+        surface: '#111111', // Very subtle lift
+        primary: '#F2C94C', // Technical Amber (replacing neon green)
+        secondary: '#3b82f6', // Sharp Professional Blue
+        accent: '#F2994A', // Orange accent
+        'surface-highlight': '#222222', // High contrast border color
+        text: '#eaeaea',
+        'text-muted': '#888888',
       },
       fontFamily: {
         mono: [
@@ -34,16 +34,16 @@ export default {
       },
       backgroundImage: {
         'grid-pattern':
-          'linear-gradient(to right, #1f2937 1px, transparent 1px), linear-gradient(to bottom, #1f2937 1px, transparent 1px)',
+          'linear-gradient(to right, #222 1px, transparent 1px), linear-gradient(to bottom, #222 1px, transparent 1px)',
       },
       animation: {
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         glow: 'glow 2s ease-in-out infinite alternate',
       },
       keyframes: {
         glow: {
-          '0%': { boxShadow: '0 0 5px #00ff94, 0 0 10px #00ff94' },
-          '100%': { boxShadow: '0 0 20px #00ff94, 0 0 40px #00ff94' },
+          '0%': { boxShadow: '0 0 5px #F2C94C, 0 0 10px #F2C94C' },
+          '100%': { boxShadow: '0 0 20px #F2C94C, 0 0 40px #F2C94C' },
         },
       },
     },

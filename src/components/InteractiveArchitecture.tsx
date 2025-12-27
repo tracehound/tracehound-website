@@ -81,7 +81,7 @@ export default function InteractiveArchitecture() {
               {/* Tracehound Agent */}
               <div className="flex flex-col items-center gap-2 relative">
                 <div className="w-24 h-24 rounded-xl border-2 border-surface-highlight bg-surface flex items-center justify-center relative backdrop-blur-sm z-10">
-                  <img src="/favicon.svg" alt="" className="w-12 h-12 opacity-50" />
+                  <img src="/logo.svg" alt="" className="w-12 h-12 opacity-50" />
                   <div className="absolute inset-0 border-t-2 border-primary/50 animate-pulse rounded-xl"></div>
                 </div>
                 <span className="text-sm font-mono font-bold text-white">Tracehound</span>

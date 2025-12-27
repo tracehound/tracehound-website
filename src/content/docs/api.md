@@ -1,15 +1,15 @@
 ---
 title: API Reference
-description: '@tracehound/core API Reference'
+description: Comprehensive API documentation for @tracehound/core.
 ---
 
 # @tracehound/core API Reference
 
 ## Installation
 
-\`\`\`bash
+```bash
 npm install @tracehound/core
-\`\`\`
+```
 
 ## Core Components
 
@@ -17,29 +17,29 @@ npm install @tracehound/core
 
 The main entry point for intercepting requests.
 
-\`\`\`ts
+```ts
 import { createAgent, createQuarantine, createRateLimiter } from '@tracehound/core'
 
 const agent = createAgent({
-quarantine: createQuarantine({ maxCount: 10000, maxBytes: 100_000_000 }),
-rateLimiter: createRateLimiter({ windowMs: 60_000, maxRequests: 100 }),
+  quarantine: createQuarantine({ maxCount: 10000, maxBytes: 100_000_000 }),
+  rateLimiter: createRateLimiter({ windowMs: 60_000, maxRequests: 100 }),
 })
 
 const result = agent.intercept(scent)
-\`\`\`
+```
 
-#### \`agent.intercept(scent: Scent): InterceptResult\`
+#### `agent.intercept(scent: Scent): InterceptResult`
 
 Process a scent through the security pipeline.
 
 **Returns:**
 
-- \`{ status: 'clean' }\` - No threat detected
-- \`{ status: 'rate_limited', retryAfter: number }\` - Rate limit exceeded
-- \`{ status: 'payload_too_large', limit: number }\` - Payload exceeds limit
-- \`{ status: 'quarantined', handle: EvidenceHandle }\` - Threat quarantined
-- \`{ status: 'ignored', signature: string }\` - Duplicate threat
-- \`{ status: 'error', error: string }\` - Processing error
+- `{ status: 'clean' }` - No threat detected
+- `{ status: 'rate_limited', retryAfter: number }` - Rate limit exceeded
+- `{ status: 'payload_too_large', limit: number }` - Payload exceeds limit
+- `{ status: 'quarantined', handle: EvidenceHandle }` - Threat quarantined
+- `{ status: 'ignored', signature: string }` - Duplicate threat
+- `{ status: 'error', error: string }` - Processing error
 
 ---
 
@@ -47,14 +47,14 @@ Process a scent through the security pipeline.
 
 Evidence buffer with priority-based eviction.
 
-\`\`\`ts
+```ts
 import { createQuarantine } from '@tracehound/core'
 
 const quarantine = createQuarantine({
-maxCount: 10000, // Max evidence count
-maxBytes: 100_000_000, // Max bytes (100MB)
+  maxCount: 10000, // Max evidence count
+  maxBytes: 100_000_000, // Max bytes (100MB)
 })
-\`\`\`
+```
 
 ---
 
@@ -62,15 +62,15 @@ maxBytes: 100_000_000, // Max bytes (100MB)
 
 Token bucket rate limiter with source blocking.
 
-\`\`\`ts
+```ts
 import { createRateLimiter } from '@tracehound/core'
 
 const rateLimiter = createRateLimiter({
-windowMs: 60_000, // Time window
-maxRequests: 100, // Max requests per window
-blockDuration: 300_000, // Block duration when exceeded
+  windowMs: 60_000, // Time window
+  maxRequests: 100, // Max requests per window
+  blockDuration: 300_000, // Block duration when exceeded
 })
-\`\`\`
+```
 
 ---
 
@@ -78,24 +78,24 @@ blockDuration: 300_000, // Block duration when exceeded
 
 Jittered tick scheduler for background tasks.
 
-\`\`\`ts
+```ts
 import { createScheduler } from '@tracehound/core'
 
 const scheduler = createScheduler({
-tickInterval: 1000, // Base interval
-jitterMs: 100, // Random jitter
+  tickInterval: 1000, // Base interval
+  jitterMs: 100, // Random jitter
 })
 
 scheduler.schedule(
-'cleanup',
-async () => {
-// Background task
-},
-{ priority: 1 }
+  'cleanup',
+  async () => {
+    // Background task
+  },
+  { priority: 1 }
 )
 
 scheduler.start()
-\`\`\`
+```
 
 ---
 
@@ -103,17 +103,17 @@ scheduler.start()
 
 Pull-based observability for threat statistics.
 
-\`\`\`ts
+```ts
 import { createWatcher } from '@tracehound/core'
 
 const watcher = createWatcher({
-quarantine,
-auditChain,
+  quarantine,
+  auditChain,
 })
 
 const snapshot = watcher.getSnapshot()
 console.log(snapshot.stats)
-\`\`\`
+```
 
 ---
 
@@ -123,26 +123,26 @@ console.log(snapshot.stats)
 
 Input to the security pipeline.
 
-\`\`\`ts
+```ts
 interface Scent {
-id: string // Unique ID (UUIDv7)
-timestamp: number // Capture time (ms)
-source: string // Origin (IP, user agent)
-payload: JsonSerializable
-threat?: ThreatSignal
+  id: string // Unique ID (UUIDv7)
+  timestamp: number // Capture time (ms)
+  source: string // Origin (IP, user agent)
+  payload: JsonSerializable
+  threat?: ThreatSignal
 }
-\`\`\`
+```
 
 ### ThreatSignal
 
 External detector classification.
 
-\`\`\`ts
+```ts
 interface ThreatSignal {
-category: 'injection' | 'ddos' | 'flood' | 'spam' | 'malware' | 'unknown'
-severity: 'low' | 'medium' | 'high' | 'critical'
+  category: 'injection' | 'ddos' | 'flood' | 'spam' | 'malware' | 'unknown'
+  severity: 'low' | 'medium' | 'high' | 'critical'
 }
-\`\`\`
+```
 
 ---
 
@@ -150,30 +150,30 @@ severity: 'low' | 'medium' | 'high' | 'critical'
 
 ### ID Generation
 
-\`\`\`ts
+```ts
 import { generateSecureId, isValidSecureId } from '@tracehound/core'
 
 const id = generateSecureId() // UUIDv7
 isValidSecureId(id) // true
-\`\`\`
+```
 
 ### Hashing
 
-\`\`\`ts
+```ts
 import { hash, hashBuffer } from '@tracehound/core'
 
 hash('data') // SHA-256 hex string
 hashBuffer(uint8array) // SHA-256 hex from buffer
-\`\`\`
+```
 
 ### Binary Codec
 
-\`\`\`ts
+```ts
 import {
-createColdPathCodec,
-encodeWithIntegrity,
-verify,
-decodeWithIntegrity,
+  createColdPathCodec,
+  encodeWithIntegrity,
+  verify,
+  decodeWithIntegrity,
 } from '@tracehound/core'
 
 // Compression
@@ -184,13 +184,13 @@ const decompressed = codec.decode(compressed)
 // Integrity (cold storage)
 const encoded = encodeWithIntegrity(data)
 if (verify(encoded)) {
-const decoded = decodeWithIntegrity(encoded)
+  const decoded = decodeWithIntegrity(encoded)
 }
-\`\`\`
+```
 
 ---
 
 ## Adapters
 
-- [@tracehound/express](./packages/express/README.md) - Express middleware
-- [@tracehound/fastify](./packages/fastify/README.md) - Fastify plugin
+- `@tracehound/express` - Express middleware
+- `@tracehound/fastify` - Fastify plugin

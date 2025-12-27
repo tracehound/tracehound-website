@@ -1,39 +1,50 @@
 ---
-import { Github } from 'lucide-react';
+import { Github } from 'lucide-react'
 
 const links = [
+  { href: '/pricing', label: 'Pricing' },
   { href: '/docs/getting-started', label: 'Docs' },
   { href: '/docs/api', label: 'API' },
   { href: '/docs/roadmap', label: 'Roadmap' },
-];
+]
 ---
 
-<nav class="sticky top-0 z-50 w-full border-b border-surface-highlight bg-background/80 backdrop-blur-md">
-  <div class="container-custom flex h-16 items-center justify-between">
-    <a href="/" class="flex items-center space-x-2 font-bold text-xl tracking-tighter">
-      <span class="text-primary">Trace</span><span class="text-white">hound</span>
+<nav
+  class="sticky top-0 z-50 w-full border-b border-surface-highlight bg-background/95 backdrop-blur-sm"
+>
+  <div class="container-custom relative flex h-16 items-center justify-between">
+    <a href="/" class="flex items-center gap-3 font-bold text-xl tracking-tight group">
+      <div
+        class="p-1.5 bg-primary/10 border border-primary/20 rounded-sm group-hover:bg-primary/20 transition-colors"
+      >
+        <img src="/logo.svg" alt="Logo" class="h-6 w-6" />
+      </div>
+      <span class="font-mono">Tracehound</span>
     </a>
 
-    <div class="hidden md:flex items-center space-x-6">
-      {links.map((link) => (
-        <a
-          href={link.href}
-          class="text-sm font-medium text-text-muted hover:text-primary transition-colors"
-        >
-          {link.label}
-        </a>
-      ))}
+    <!-- Desktop Links -->
+    <div class="hidden md:flex items-center gap-1">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class="px-4 py-2 text-sm font-medium text-text-muted hover:text-white hover:bg-white/5 rounded-sm transition-all">
+            {link.label}
+          </a>
+        ))
+      }
     </div>
 
-    <div class="flex items-center space-x-4">
+    <!-- Right Side -->
+    <div class="flex items-center gap-4">
       <a
         href="https://github.com/tracehound/core"
         target="_blank"
         rel="noreferrer"
-        class="text-text-muted hover:text-white transition-colors"
+        class="hidden sm:flex items-center gap-2 px-3 py-1.5 text-xs font-mono text-text-muted border border-surface-highlight hover:border-primary/50 hover:text-primary rounded-sm transition-all"
       >
-        <Github className="h-5 w-5" />
-        <span class="sr-only">GitHub</span>
+        <Github className="h-4 w-4" />
+        <span>GitHub</span>
       </a>
     </div>
   </div>

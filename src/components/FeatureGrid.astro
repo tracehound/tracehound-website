@@ -1,61 +1,73 @@
 ---
-import { ShieldAlert, Database, Lock, Fingerprint, Clock, Server } from 'lucide-react';
+import { Clock, Database, Fingerprint, Lock, Server, ShieldAlert } from 'lucide-react'
 
 const features = [
   {
     icon: ShieldAlert,
-    title: "Threat Quarantine",
-    description: "Suspicious requests are isolated immediately. Tracehound acts as a buffer, preventing potential exploits from reaching your core handlers."
+    title: 'Threat Quarantine',
+    description:
+      'Suspicious requests are isolated immediately. Tracehound acts as a buffer, preventing potential exploits from reaching your core handlers.',
   },
   {
     icon: Database,
-    title: "Immutable Evidence",
-    description: "Every quarantined request is cryptographically signed and stored. Create a tamper-proof audit trail for compliance and forensics."
+    title: 'Immutable Evidence',
+    description:
+      'Every quarantined request is cryptographically signed and stored. Create a tamper-proof audit trail for compliance and forensics.',
   },
   {
     icon: Lock,
-    title: "Zero Decisions",
-    description: "Tracehound never guesses. It relies on deterministic rules or external signals, eliminating the risk of false positives blocking legitimate users."
+    title: 'Zero Decisions',
+    description:
+      'Tracehound never guesses. It relies on deterministic rules or external signals, eliminating the risk of false positives blocking legitimate users.',
   },
   {
     icon: Fingerprint,
-    title: "Content Signatures",
-    description: "Detect replay attacks and identical payloads instantly using content-based hashing and deduplication."
+    title: 'Content Signatures',
+    description:
+      'Detect replay attacks and identical payloads instantly using content-based hashing and deduplication.',
   },
   {
     icon: Clock,
-    title: "Priority Eviction",
-    description: "Smart buffer management ensures critical evidence is preserved while handling high-volume attacks without memory leaks."
+    title: 'Priority Eviction',
+    description:
+      'Smart buffer management ensures critical evidence is preserved while handling high-volume attacks without memory leaks.',
   },
   {
     icon: Server,
-    title: "Framework Agnostic",
-    description: "Drop into Express, Fastify, or any Node.js framework. It's just a middleware that sits before your business logic."
-  }
-];
+    title: 'Framework Agnostic',
+    description:
+      "Drop into Express, Fastify, or any Node.js framework. It's just a middleware that sits before your business logic.",
+  },
+]
 ---
 
-<section class="py-24 bg-surface/30">
+<section class="py-24 border-b border-surface-highlight">
   <div class="container-custom">
     <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-5xl font-bold mb-6">Why Tracehound?</h2>
+      <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Why Tracehound?</h2>
       <p class="text-text-muted text-lg max-w-2xl mx-auto">
-        Traditional WAFs block requests and lose the context. Tracehound captures the context and lets you analyze it safely.
+        Traditional WAFs block requests and lose the context. Tracehound captures the context and
+        lets you analyze it safely.
       </p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {features.map((feature) => (
-        <div class="p-6 rounded-xl border border-surface-highlight bg-surface/50 hover:bg-surface-highlight/50 transition-colors group">
-          <div class="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
-            <feature.icon className="h-6 w-6" />
+      {
+        features.map((feature, index) => (
+          <div class="p-8 border border-surface-highlight bg-surface/30 hover:bg-surface/50 hover:border-primary/30 transition-all group relative">
+            <div class="absolute top-4 right-4 text-xs font-mono text-surface-highlight group-hover:text-primary/50 transition-colors">
+              0{index + 1}
+            </div>
+            <div class="h-10 w-10 bg-primary/10 flex items-center justify-center text-primary mb-6 rounded-sm border border-primary/20 group-hover:scale-105 transition-transform duration-300">
+              <feature.icon className="h-5 w-5" />
+            </div>
+            <h3 class="text-lg font-bold mb-3 text-white font-mono uppercase tracking-wide">
+              {feature.title}
+            </h3>
+            <p class="text-text-muted text-sm leading-relaxed">{feature.description}</p>
           </div>
-          <h3 class="text-xl font-bold mb-3 text-white">{feature.title}</h3>
-          <p class="text-text-muted leading-relaxed">
-            {feature.description}
-          </p>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </section>

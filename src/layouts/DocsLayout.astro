@@ -1,45 +1,47 @@
 ---
-import Layout from './Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import { getCollection } from 'astro:content';
+import { getCollection } from 'astro:content'
+import Navbar from '../components/Navbar.astro'
+import Layout from './Layout.astro'
 
-const allDocs = await getCollection('docs');
-const { title, description } = Astro.props;
+const allDocs = await getCollection('docs')
+const { title, description } = Astro.props
 
 // Sort docs logic or define manual order
-const order = ['getting-started', 'configuration', 'api', 'roadmap'];
+const order = ['getting-started', 'configuration', 'api', 'roadmap']
 const sortedDocs = allDocs.sort((a, b) => {
-    return order.indexOf(a.slug) - order.indexOf(b.slug);
-});
+  return order.indexOf(a.slug) - order.indexOf(b.slug)
+})
 ---
 
 <Layout title={title} description={description}>
-    <Navbar />
-    <div class="container-custom flex-1 flex flex-col md:flex-row gap-8 py-8">
-        <!-- Sidebar -->
-        <aside class="w-full md:w-64 shrink-0">
-            <nav class="sticky top-24 flex flex-col gap-2">
-                <span class="text-sm font-bold text-white mb-2 uppercase tracking-wider">Documentation</span>
-                {sortedDocs.map((doc) => (
-                    <a
-                        href={`/docs/${doc.slug}`}
-                        class={`px-3 py-2 rounded-md text-sm transition-colors ${
-                            Astro.url.pathname.includes(doc.slug)
-                            ? 'bg-primary/10 text-primary border border-primary/20'
-                            : 'text-text-muted hover:text-white hover:bg-surface-highlight'
-                        }`}
-                    >
-                        {doc.data.title}
-                    </a>
-                ))}
-            </nav>
-        </aside>
+  <Navbar />
+  <div class="container-custom flex-1 flex flex-col md:flex-row gap-8 py-8 w-full">
+    <!-- Sidebar -->
+    <aside class="w-full md:w-64 shrink-0">
+      <nav class="sticky top-24 flex flex-col gap-2">
+        <span class="text-sm font-bold text-white mb-2 uppercase tracking-wider">Documentation</span
+        >
+        {
+          sortedDocs.map((doc) => (
+            <a
+              href={`/docs/${doc.slug}`}
+              class={`px-3 py-2 rounded-md text-sm transition-colors ${
+                Astro.url.pathname.includes(doc.slug)
+                  ? 'bg-primary/10 text-primary border border-primary/20'
+                  : 'text-text-muted hover:text-white hover:bg-surface-highlight'
+              }`}>
+              {doc.data.title}
+            </a>
+          ))
+        }
+      </nav>
+    </aside>
 
-        <!-- Content -->
-        <main class="flex-1 min-w-0">
-            <article class="prose prose-invert prose-green max-w-none">
-                <slot />
-            </article>
-        </main>
-    </div>
+    <!-- Content -->
+    <main class="flex-1 min-w-0">
+      <article class="prose prose-invert prose-green max-w-none">
+        <slot />
+      </article>
+    </main>
+  </div>
 </Layout>

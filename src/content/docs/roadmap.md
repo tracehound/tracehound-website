@@ -1,9 +1,9 @@
 ---
 title: Roadmap
-description: Tracehound Project Roadmap
+description: Development roadmap and status for Tracehound.
 ---
 
-# Tracehound Roadmap [LOCKED]
+# Tracehound Roadmap
 
 > **Scope:** Deterministic runtime security buffer & forensic substrate
 > **Core Invariants:** Decision-free, payload-less, GC-independent
@@ -58,14 +58,14 @@ description: Tracehound Project Roadmap
 
 ### v0.7.0 - P0 Complete
 
-- [x] Cold Storage Adapter (\`IColdStorageAdapter\`)
+- [x] Cold Storage Adapter (`IColdStorageAdapter`)
 - [x] Trust Boundary Runtime
 - [x] Rename hound-worker → hound-process
 
 ### v0.8.0 - P1 Complete
 
-- [x] Express Adapter (\`@tracehound/express\`)
-- [x] Fastify Adapter (\`@tracehound/fastify\`)
+- [x] Express Adapter (`@tracehound/express`)
+- [x] Fastify Adapter (`@tracehound/fastify`)
 - [x] API Documentation
 - [x] Granular Error Codes (35+ factories)
 - [x] Purge + Replace API
@@ -79,22 +79,22 @@ description: Tracehound Project Roadmap
 
 ### Remaining Items
 
-| Item               | Package             | Priority | Status |
-| ------------------ | ------------------- | -------- | ------ |
-| CLI Interface      | \`@tracehound/cli\` | HIGH     | 🔲     |
-| TUI Dashboard      | \`@tracehound/cli\` | MEDIUM   | 🔲     |
-| Comprehensive Docs | \`docs/\`           | HIGH     | 🔲     |
+| Item               | Package           | Priority | Status |
+| ------------------ | ----------------- | -------- | ------ |
+| CLI Interface      | `@tracehound/cli` | HIGH     | 🔲     |
+| TUI Dashboard      | `@tracehound/cli` | MEDIUM   | 🔲     |
+| Comprehensive Docs | `docs/`           | HIGH     | 🔲     |
 
 ### Success Criteria
 
-| Criterion           | Target                | Status |
-| ------------------- | --------------------- | ------ |
-| intercept() latency | < 1ms p99             | ✅     |
-| Memory stability    | 100k threats          | ✅     |
-| Error codes         | Granular              | ✅     |
-| Scenario tests      | Full lifecycle        | ✅     |
-| CLI basic           | \`tracehound status\` | 🔲     |
-| Documentation       | Getting started       | 🔲     |
+| Criterion           | Target              | Status |
+| ------------------- | ------------------- | ------ |
+| intercept() latency | < 1ms p99           | ✅     |
+| Memory stability    | 100k threats        | ✅     |
+| Error codes         | Granular            | ✅     |
+| Scenario tests      | Full lifecycle      | ✅     |
+| CLI basic           | `tracehound status` | 🔲     |
+| Documentation       | Getting started     | 🔲     |
 
 ---
 
@@ -108,13 +108,8 @@ description: Tracehound Project Roadmap
 | External Notification API  | Read-only event emission (SIEM, SOC, pipelines)      | P0       |
 | Event Taxonomy & Contracts | Frozen event set (at-most-once, unordered, no retry) | P0       |
 | Evidence Lifecycle Policy  | Declarative retention / eviction policies            | P1       |
-| Async Codec                | \`@tracehound/codec-async\` - Streaming gzip         | P1       |
-| Cold Storage Adapters      | \`@tracehound/cold-s3\`, \`cold-r2\`, \`cold-gcs\`   | P1       |
-
-### Success Criteria
-
-- [ ] Notification API introduces zero backpressure
-- [ ] Policies remain deploy-time, not runtime-interactive
+| Async Codec                | `@tracehound/codec-async` - Streaming gzip           | P1       |
+| Cold Storage Adapters      | `@tracehound/cold-s3`, `cold-r2`, `cold-gcs`         | P1       |
 
 ---
 
@@ -130,13 +125,6 @@ description: Tracehound Project Roadmap
 | Evidence Cost Accounting      | Memory + cold storage cost visibility          | P1       |
 | Threat Coalescing             | Time-window aggregation for repetitive threats | P1       |
 | DPS (Payload Summary)         | Deterministic summary for explainability       | P2       |
-
-### Explicit Non-Goals
-
-- Payload replay or re-execution
-- Interactive dashboards
-- Content inspection or mutation
-- ML-based scoring
 
 ---
 
@@ -158,12 +146,6 @@ description: Tracehound Project Roadmap
 - Argos WorkingMemory is physically separate from Quarantine
 - Sampling-only, no continuous observation
 - No kernel, syscall, or memory dump access
-
-### Success Criteria
-
-- [ ] <1% CPU overhead under load
-- [ ] Zero coupling with request lifecycle
-- [ ] Core determinism guarantees preserved
 
 ---
 
@@ -199,17 +181,3 @@ These are **permanently excluded** to preserve product identity:
 - Rule engines or detection logic
 - ML-based classification
 - WAF / RASP replacement features
-
----
-
-## Roadmap Principles (Locked)
-
-- Tracehound remains **decision-free**
-- Detection is always **external**
-- Payloads are **never exposed**
-- Explainability > interactivity
-- Forensics > visualization
-
----
-
-**Last Updated:** 2024-12-27
