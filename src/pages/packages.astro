@@ -1,0 +1,297 @@
+---
+import { Activity, ArrowRight, Database, Eye, Globe, Shield, Skull, Target, Zap } from 'lucide-react'
+import Footer from '../components/Footer.astro'
+import Navbar from '../components/Navbar.astro'
+import Layout from '../layouts/Layout.astro'
+
+// Package data organized by layer
+const layers = [
+  {
+    name: 'Substrate',
+    badge: 'FREE & OPEN SOURCE',
+    badgeColor: 'bg-primary/20 border-primary/30 text-primary',
+    sectionColor: 'primary',
+    description: 'Core security packages. Deterministic evidence, interception, failure containment.',
+    packages: [
+      {
+        name: '@tracehound/core',
+        shortName: 'Core',
+        description: 'Main security buffer. Request interception, evidence custody, quarantine, audit chain.',
+        icon: Shield,
+        status: 'Available',
+        statusColor: 'text-green-400',
+        features: ['Agent.intercept()', 'Quarantine buffer', 'AuditChain integrity', 'Fail-Safe panic handling'],
+        href: '/docs/getting-started',
+      },
+      {
+        name: '@tracehound/express',
+        shortName: 'Express',
+        description: 'Express.js middleware adapter for Tracehound integration.',
+        icon: Shield,
+        status: 'Available',
+        statusColor: 'text-green-400',
+        features: ['Express middleware', 'Automatic interception', 'Request context'],
+        href: '/docs/getting-started',
+      },
+      {
+        name: '@tracehound/fastify',
+        shortName: 'Fastify',
+        description: 'Fastify plugin adapter for Tracehound integration.',
+        icon: Shield,
+        status: 'Available',
+        statusColor: 'text-green-400',
+        features: ['Fastify plugin', 'Hook integration', 'Request context'],
+        href: '/docs/getting-started',
+      },
+      {
+        name: '@tracehound/cli',
+        shortName: 'CLI',
+        description: 'Command-line interface for Tracehound management and diagnostics.',
+        icon: Shield,
+        status: 'Available',
+        statusColor: 'text-green-400',
+        features: ['Status monitoring', 'Evidence inspection', 'Configuration management'],
+        href: '/docs/getting-started',
+      },
+    ],
+  },
+  {
+    name: 'Satellites',
+    badge: '$49/pkg/mo',
+    badgeColor: 'bg-purple-500/20 border-purple-500/30 text-purple-400',
+    sectionColor: 'purple-500',
+    description: 'Enrichment, policy execution, threat intel, history ledger.',
+    packages: [
+      {
+        name: '@tracehound/argos',
+        shortName: 'Argos',
+        description: 'Runtime behavioral observation. Event loop starvation, anomaly detection, burst attacks.',
+        icon: Eye,
+        status: 'In Development',
+        statusColor: 'text-yellow-400',
+        features: ['Worker thread observation', 'Adaptive sampling', 'Ring buffer analysis', 'Behavioral signals'],
+        href: '/argos',
+      },
+      {
+        name: '@tracehound/talos',
+        shortName: 'Talos',
+        description: 'External policy execution. OPA integration, custom policy engines, decision routing.',
+        icon: Target,
+        status: 'Q2 2026',
+        statusColor: 'text-text-muted',
+        features: ['OPA integration', 'Custom policy engines', 'Decision routing', 'Policy caching'],
+        href: '/talos',
+      },
+      {
+        name: '@tracehound/huginn',
+        shortName: 'Huginn',
+        description: 'Threat intelligence ingestion. IP reputation, MITRE mapping, IOC correlation.',
+        icon: Globe,
+        status: 'Q2 2026',
+        statusColor: 'text-text-muted',
+        features: ['IP reputation feeds', 'MITRE ATT&CK mapping', 'IOC correlation', 'Feed synchronization'],
+        href: '/huginn',
+      },
+      {
+        name: '@tracehound/muninn',
+        shortName: 'Muninn',
+        description: 'Historical ledger & aggregation. Time-series analysis, pattern storage, forensic queries.',
+        icon: Database,
+        status: 'Q2 2026',
+        statusColor: 'text-text-muted',
+        features: ['Time-series storage', 'Pattern analysis', 'Forensic queries', 'Long-term retention'],
+        href: '/muninn',
+      },
+    ],
+  },
+  {
+    name: 'Advanced',
+    badge: '$99/pkg/mo',
+    badgeColor: 'bg-orange-500/20 border-orange-500/30 text-orange-400',
+    sectionColor: 'orange-500',
+    description: 'Enterprise-grade validation and stress testing.',
+    packages: [
+      {
+        name: '@tracehound/norns',
+        shortName: 'Norns',
+        description: 'Deterministic readiness synthesis. Pre-deployment security posture validation.',
+        icon: Activity,
+        status: 'Coming Soon',
+        statusColor: 'text-text-muted',
+        features: ['Security posture snapshots', 'Pre-deployment validation', 'Compliance reports', 'Readiness gates'],
+        href: '#',
+        comingSoon: true,
+      },
+      {
+        name: '@tracehound/furies',
+        shortName: 'Furies',
+        description: 'Adversarial validation & stress harness. Chaos engineering for security infrastructure.',
+        icon: Skull,
+        status: 'Coming Soon',
+        statusColor: 'text-text-muted',
+        features: ['Controlled chaos injection', 'Security stress testing', 'Failure mode exploration', 'Resilience validation'],
+        href: '#',
+        comingSoon: true,
+      },
+    ],
+  },
+  {
+    name: 'Watchtower',
+    badge: 'SUBSCRIPTION',
+    badgeColor: 'bg-blue-500/20 border-blue-500/30 text-blue-400',
+    sectionColor: 'blue-500',
+    description: 'Forensic visualization and workflow acceleration.',
+    packages: [
+      {
+        name: '@tracehound/watchtower',
+        shortName: 'Watchtower',
+        description: 'Forensic cockpit. Visualization, workflow acceleration, operational dashboards.',
+        icon: Zap,
+        status: 'Coming Soon',
+        statusColor: 'text-text-muted',
+        features: ['Forensic dashboard', 'Evidence visualization', 'Threat timelines', 'Incident response tooling'],
+        href: '#',
+        comingSoon: true,
+      },
+    ],
+  },
+]
+---
+
+<Layout title="Packages | Tracehound">
+  <Navbar />
+
+  <!-- Hero -->
+  <section class="py-24 border-b border-surface-highlight">
+    <div class="container-custom">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+          All <span class="text-primary">Packages</span>
+        </h1>
+        <p class="text-text-muted text-lg mb-8 max-w-2xl mx-auto">
+          Open-core security platform. Core is free and open source.
+          Satellites extend capability without touching safety.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4 text-sm font-mono">
+          <a href="#substrate" class="px-4 py-2 bg-primary/10 border border-primary/30 text-primary rounded-sm hover:bg-primary/20 transition-colors">
+            Substrate
+          </a>
+          <a href="#satellites" class="px-4 py-2 bg-purple-500/10 border border-purple-500/30 text-purple-400 rounded-sm hover:bg-purple-500/20 transition-colors">
+            Satellites
+          </a>
+          <a href="#advanced" class="px-4 py-2 bg-orange-500/10 border border-orange-500/30 text-orange-400 rounded-sm hover:bg-orange-500/20 transition-colors">
+            Advanced
+          </a>
+          <a href="#watchtower" class="px-4 py-2 bg-blue-500/10 border border-blue-500/30 text-blue-400 rounded-sm hover:bg-blue-500/20 transition-colors">
+            Watchtower
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Package Layers -->
+  {layers.map((layer, layerIndex) => {
+    const colorMap = {
+      'primary': { bg: 'bg-primary/5', border: 'border-primary/20', text: 'text-primary' },
+      'purple-500': { bg: 'bg-purple-500/5', border: 'border-purple-500/20', text: 'text-purple-400' },
+      'orange-500': { bg: 'bg-orange-500/5', border: 'border-orange-500/20', text: 'text-orange-400' },
+      'blue-500': { bg: 'bg-blue-500/5', border: 'border-blue-500/20', text: 'text-blue-400' },
+    }
+    const c = colorMap[layer.sectionColor as keyof typeof colorMap]
+
+    return (
+      <section id={layer.name.toLowerCase()} class={`py-20 ${c.bg} border-b ${c.border}`}>
+        <div class="container-custom">
+          <div class="max-w-6xl mx-auto">
+            <!-- Layer Header -->
+            <div class="mb-12">
+              <div class="flex items-center gap-4 mb-4">
+                <h2 class={`text-3xl font-bold font-mono ${c.text}`}>{layer.name}</h2>
+                <span class={`text-xs px-3 py-1 rounded-full border ${layer.badgeColor}`}>
+                  {layer.badge}
+                </span>
+              </div>
+              <p class="text-text-muted">{layer.description}</p>
+            </div>
+
+            <!-- Packages Grid -->
+            <div class={`w-full grid gap-6 ${layer.packages.length === 1 ? 'md:grid-cols-1' : layer.packages.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-4'}`}>
+              {layer.packages.map((pkg) => {
+                const Icon = pkg.icon
+                const isDisabled = pkg.comingSoon
+
+                return (
+                  <div class={`bg-surface/50 border ${layer.packages.length === 1 ? 'col-span-1' : ''} ${c.border} p-6 rounded-sm ${isDisabled ? 'opacity-70' : ''}`}>
+                    <div class="flex items-center gap-3 mb-4">
+                      <div class={`w-10 h-10 ${c.bg} rounded-sm flex items-center justify-center`}>
+                        <Icon className={`w-5 h-5 ${c.text}`} />
+                      </div>
+                      <div>
+                        <h3 class="font-bold text-white font-mono">{pkg.shortName}</h3>
+                        <span class={`text-xs ${pkg.statusColor}`}>{pkg.status}</span>
+                      </div>
+                    </div>
+
+                    <p class="text-xs text-text-muted font-mono mb-3">{pkg.name}</p>
+
+                    <p class="text-sm text-text-muted mb-4">{pkg.description}</p>
+
+                    <ul class="text-xs text-text-muted space-y-1 mb-4">
+                      {pkg.features.map((feature) => (
+                        <li class="flex items-start gap-2">
+                          <span class={`w-1 h-1 ${c.text.replace('text-', 'bg-')} rounded-full mt-1.5 shrink-0`}></span>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+
+                    {!isDisabled ? (
+                      <a
+                        href={pkg.href}
+                        class={`inline-flex items-center gap-2 text-xs ${c.text} hover:underline`}
+                      >
+                        Learn more <ArrowRight className="w-3 h-3" />
+                      </a>
+                    ) : (
+                      <span class="text-xs text-text-muted/50">Coming Soon</span>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  })}
+
+  <!-- CTA -->
+  <section class="py-16">
+    <div class="container-custom">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-2xl font-bold mb-4">Ready to get started?</h2>
+        <p class="text-text-muted mb-8">
+          Start with the free open-source substrate. Add satellites as you need them.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a
+            href="/docs/getting-started"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-background font-medium rounded-sm hover:bg-primary/90 transition-colors"
+          >
+            Get Started <ArrowRight className="w-4 h-4" />
+          </a>
+          <a
+            href="/pricing"
+            class="inline-flex items-center gap-2 px-6 py-3 border border-surface-highlight text-white font-medium rounded-sm hover:bg-surface-highlight/50 transition-colors"
+          >
+            View Pricing
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>

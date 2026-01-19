@@ -1,0 +1,278 @@
+---
+import { ArrowRight, Eye, Target, Globe, Database } from 'lucide-react'
+
+const satellites = [
+  {
+    name: 'Argos',
+    tagline: 'Your Runtime Watchdog',
+    description: 'Know when your app starts misbehaving — before your users do. Event loop lag, memory spikes, unexpected slowdowns.',
+    color: '#a855f7',
+    statusLabel: 'In Development',
+    statusColor: 'yellow',
+    icon: Eye,
+    features: ['Event loop monitoring', 'Anomaly detection', '<1% CPU overhead'],
+    href: '/argos',
+    terminal: {
+      command: 'argos status',
+      lines: [
+        { label: 'Runtime Status', value: 'HEALTHY', valueColor: 'text-green-400' },
+        { label: 'Event Loop Lag', value: '12ms', valueColor: 'text-white' },
+        { label: 'Sampling Mode', value: 'ADAPTIVE', valueColor: 'text-purple-400' },
+      ],
+      message: 'No anomalies detected in the last 24h',
+    },
+  },
+  {
+    name: 'Talos',
+    tagline: 'Your Policy Enforcer',
+    description: 'Connect to external policy engines. OPA, custom rules, decision endpoints. Tracehound stays decision-free, Talos executes.',
+    color: '#f97316',
+    statusLabel: 'Q2 2026',
+    statusColor: 'gray',
+    icon: Target,
+    features: ['OPA integration', 'Custom policy engines', 'Decision routing'],
+    href: '/talos',
+    terminal: {
+      command: 'talos policy check',
+      lines: [
+        { label: 'Policy Engine', value: 'OPA', valueColor: 'text-orange-400' },
+        { label: 'Active Rules', value: '24', valueColor: 'text-white' },
+        { label: 'Last Decision', value: 'ALLOW', valueColor: 'text-green-400' },
+      ],
+      message: 'Policy evaluation: 0.3ms avg latency',
+    },
+  },
+  {
+    name: 'Huginn',
+    tagline: 'Your Threat Scout',
+    description: 'External threat intelligence integration. IP reputation, MITRE mapping, known bad actors. Correlate with local evidence.',
+    color: '#3b82f6',
+    statusLabel: 'Q2 2026',
+    statusColor: 'gray',
+    icon: Globe,
+    features: ['IP reputation feeds', 'MITRE ATT&CK mapping', 'IOC correlation'],
+    href: '/huginn',
+    terminal: {
+      command: 'huginn intel fetch',
+      lines: [
+        { label: 'Threat Feeds', value: '3 active', valueColor: 'text-blue-400' },
+        { label: 'Last Sync', value: '5m ago', valueColor: 'text-white' },
+        { label: 'IOCs Cached', value: '12,847', valueColor: 'text-white' },
+      ],
+      message: 'All feeds synchronized',
+    },
+  },
+  {
+    name: 'Muninn',
+    tagline: 'Your Memory Keeper',
+    description: 'Historical ledger & aggregation. Time-series threat analysis, pattern recognition, long-term storage for forensics.',
+    color: '#10b981',
+    statusLabel: 'Q2 2026',
+    statusColor: 'gray',
+    icon: Database,
+    features: ['Time-series storage', 'Pattern analysis', 'Forensic queries'],
+    href: '/muninn',
+    terminal: {
+      command: 'muninn query --last 7d',
+      lines: [
+        { label: 'Events Stored', value: '1.2M', valueColor: 'text-emerald-400' },
+        { label: 'Patterns Found', value: '47', valueColor: 'text-white' },
+        { label: 'Storage Used', value: '2.4GB', valueColor: 'text-white' },
+      ],
+      message: 'Query completed in 23ms',
+    },
+  },
+]
+---
+
+<section
+  id="satellites-carousel"
+  class="py-24 border-y border-dashed border-purple-500/20 bg-gradient-to-b from-purple-500/5 to-transparent overflow-hidden"
+>
+  <div class="container-custom">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <span class="text-xs font-mono text-purple-400 tracking-wider uppercase">Satellite Packages — $49/pkg/mo</span>
+      <h2 class="text-2xl md:text-3xl font-bold mt-2 mb-2">
+        Meet the <span class="text-purple-400">Satellites</span>
+      </h2>
+      <p class="text-text-muted max-w-xl mx-auto text-sm">
+        Extend Tracehound with behavioral observation, policy execution, threat intel, and historical analysis.
+      </p>
+    </div>
+
+    <!-- Carousel Container -->
+    <div class="relative">
+      <!-- Slides -->
+      <div id="carousel-track" class="flex transition-transform duration-700 ease-in-out">
+        {satellites.map((satellite, index) => {
+          const Icon = satellite.icon
+          const statusBg = satellite.statusColor === 'yellow' ? 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400' : 'bg-white/5 border-white/10 text-text-muted'
+
+          return (
+            <div
+              class="carousel-slide w-full flex-shrink-0 px-4"
+              data-index={index}
+            >
+              <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 max-w-5xl mx-auto">
+                <!-- Text Side -->
+                <div class="flex-1 space-y-6">
+                  <div
+                    class={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium ${statusBg}`}
+                  >
+                    <span class={`w-2 h-2 rounded-full ${satellite.statusColor === 'yellow' ? 'bg-yellow-400 animate-pulse' : 'bg-text-muted'}`}></span>
+                    {satellite.statusLabel}
+                  </div>
+
+                  <h3 class="text-3xl md:text-4xl font-bold tracking-tight leading-tight">
+                    Meet <span style={`color: ${satellite.color}`}>{satellite.name}</span>,<br />
+                    {satellite.tagline.toLowerCase()}.
+                  </h3>
+
+                  <p class="text-lg text-text-muted leading-relaxed max-w-xl">
+                    {satellite.description}
+                  </p>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+                    {satellite.features.map((feature) => (
+                      <div class="flex items-center gap-3 text-sm">
+                        <div
+                          class="w-8 h-8 rounded-lg border flex items-center justify-center"
+                          style={`background: ${satellite.color}15; border-color: ${satellite.color}30; color: ${satellite.color}`}
+                        >
+                          <Icon className="w-4 h-4" />
+                        </div>
+                        <span class="text-text-muted">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                    <a
+                      href={satellite.href}
+                      class="inline-flex items-center justify-center px-6 py-3 font-medium rounded-sm transition-all group"
+                      style={`background: ${satellite.color}; color: white;`}
+                    >
+                      Learn More
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </a>
+                    <a
+                      href="/pricing"
+                      class="inline-flex items-center justify-center px-6 py-3 border font-medium rounded-sm transition-all"
+                      style={`border-color: ${satellite.color}50; color: ${satellite.color};`}
+                    >
+                      See Pricing
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Visual Side -->
+                <div class="flex-1 w-full max-w-lg">
+                  <div
+                    class="relative p-6 bg-background/80 backdrop-blur-sm rounded-lg border shadow-lg"
+                    style={`border-color: ${satellite.color}30; box-shadow: 0 0 60px ${satellite.color}15;`}
+                  >
+                    <div class="flex items-center gap-2 mb-4 pb-3 border-b border-white/5">
+                      <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+                      <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+                      <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+                      <span class="ml-2 text-xs text-text-muted font-mono">{satellite.terminal.command}</span>
+                    </div>
+
+                    <div class="space-y-3 font-mono text-sm">
+                      {satellite.terminal.lines.map((line) => (
+                        <div class="flex justify-between items-center text-text-muted">
+                          <span style={`color: ${satellite.color}60`}>●</span>
+                          <span class="flex-1 ml-2">{line.label}</span>
+                          <span class={line.valueColor + ' font-medium'}>{line.value}</span>
+                        </div>
+                      ))}
+
+                      <div
+                        class="mt-4 p-3 rounded text-xs flex items-center gap-2"
+                        style={`background: ${satellite.color}15; border: 1px solid ${satellite.color}30; color: ${satellite.color};`}
+                      >
+                        <span class="w-2 h-2 rounded-full" style={`background: ${satellite.color}`}></span>
+                        {satellite.terminal.message}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      <!-- Indicators -->
+      <div class="flex justify-center gap-3 mt-8">
+        {satellites.map((satellite, index) => (
+          <button
+            class="carousel-indicator w-3 h-3 rounded-full border transition-all"
+            data-index={index}
+            style={`border-color: ${satellite.color}50;`}
+            aria-label={`Go to ${satellite.name}`}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('carousel-track')
+    const slides = document.querySelectorAll('.carousel-slide')
+    const indicators = document.querySelectorAll('.carousel-indicator')
+
+    if (!track || slides.length === 0) return
+
+    let currentIndex = 0
+    const totalSlides = slides.length
+    const autoPlayInterval = 5000 // 5 seconds
+
+    const colors = ['#a855f7', '#f97316', '#3b82f6', '#10b981']
+
+    function goToSlide(index: number) {
+      currentIndex = index
+      track!.style.transform = `translateX(-${index * 100}%)`
+
+      indicators.forEach((indicator, i) => {
+        const btn = indicator as HTMLButtonElement
+        if (i === index) {
+          btn.style.background = colors[i]
+          btn.style.borderColor = colors[i]
+        } else {
+          btn.style.background = 'transparent'
+          btn.style.borderColor = colors[i] + '50'
+        }
+      })
+    }
+
+    function nextSlide() {
+      goToSlide((currentIndex + 1) % totalSlides)
+    }
+
+    // Auto-play
+    let autoPlay = setInterval(nextSlide, autoPlayInterval)
+
+    // Click handlers for indicators
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        clearInterval(autoPlay)
+        goToSlide(index)
+        autoPlay = setInterval(nextSlide, autoPlayInterval)
+      })
+    })
+
+    // Pause on hover
+    const section = document.getElementById('satellites-carousel')
+    section?.addEventListener('mouseenter', () => clearInterval(autoPlay))
+    section?.addEventListener('mouseleave', () => {
+      autoPlay = setInterval(nextSlide, autoPlayInterval)
+    })
+
+    // Initialize first slide
+    goToSlide(0)
+  })
+</script>

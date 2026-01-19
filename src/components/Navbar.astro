@@ -74,6 +74,126 @@ const links = [
         </div>
       </div>
 
+      <!-- Packages Dropdown -->
+      <div class="relative group">
+        <button
+          class="flex items-center gap-1 px-3 py-2 text-sm font-medium text-text-muted hover:text-white transition-colors"
+        >
+          Packages
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="transition-transform group-hover:rotate-180"><path d="m6 9 6 6 6-6"></path></svg
+          >
+        </button>
+        <div
+          class="absolute left-0 top-full pt-2 w-80 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200"
+        >
+          <div
+            class="bg-surface border border-surface-highlight rounded-md shadow-xl overflow-hidden p-3"
+          >
+            <!-- Satellites -->
+            <div class="mb-3">
+              <p class="text-xs text-purple-400 font-mono uppercase tracking-wider mb-2 px-2">
+                Satellites — $49/pkg/mo
+              </p>
+              <a
+                href="/argos"
+                class="flex items-start gap-3 px-3 py-2 text-sm hover:bg-surface-highlight rounded-sm transition-colors"
+              >
+                <span class="text-purple-400 font-bold">A</span>
+                <div>
+                  <span class="text-white font-medium">Argos</span>
+                  <p class="text-xs text-text-muted">Runtime behavioral observation</p>
+                </div>
+              </a>
+              <a
+                href="/talos"
+                class="flex items-start gap-3 px-3 py-2 text-sm hover:bg-surface-highlight rounded-sm transition-colors"
+              >
+                <span class="text-purple-400 font-bold">T</span>
+                <div>
+                  <span class="text-white font-medium">Talos</span>
+                  <p class="text-xs text-text-muted">External policy execution</p>
+                </div>
+              </a>
+              <a
+                href="/huginn"
+                class="flex items-start gap-3 px-3 py-2 text-sm hover:bg-surface-highlight rounded-sm transition-colors"
+              >
+                <span class="text-purple-400 font-bold">H</span>
+                <div>
+                  <span class="text-white font-medium">Huginn</span>
+                  <p class="text-xs text-text-muted">Threat intelligence ingestion</p>
+                </div>
+              </a>
+              <a
+                href="/muninn"
+                class="flex items-start gap-3 px-3 py-2 text-sm hover:bg-surface-highlight rounded-sm transition-colors"
+              >
+                <span class="text-purple-400 font-bold">M</span>
+                <div>
+                  <span class="text-white font-medium">Muninn</span>
+                  <p class="text-xs text-text-muted">Historical ledger & aggregation</p>
+                </div>
+              </a>
+            </div>
+
+            <!-- Advanced -->
+            <div class="border-t border-surface-highlight pt-3">
+              <p class="text-xs text-orange-400 font-mono uppercase tracking-wider mb-2 px-2">
+                Advanced — $99/pkg/mo
+              </p>
+              <div class="flex items-start gap-3 px-3 py-2 text-sm text-text-muted/60">
+                <span class="text-orange-400/60 font-bold">N</span>
+                <div>
+                  <span class="font-medium">Norns</span>
+                  <p class="text-xs">Readiness synthesis — Coming Soon</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 px-3 py-2 text-sm text-text-muted/60">
+                <span class="text-orange-400/60 font-bold">F</span>
+                <div>
+                  <span class="font-medium">Furies</span>
+                  <p class="text-xs">Adversarial stress harness — Coming Soon</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Watchtower -->
+            <div class="border-t border-surface-highlight pt-3">
+              <p class="text-xs text-blue-400 font-mono uppercase tracking-wider mb-2 px-2">
+                Watchtower — Subscription
+              </p>
+              <div class="flex items-start gap-3 px-3 py-2 text-sm text-text-muted/60">
+                <span class="text-blue-400/60 font-bold">W</span>
+                <div>
+                  <span class="font-medium">Watchtower</span>
+                  <p class="text-xs">Forensic cockpit — Coming Soon</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- All Packages Link -->
+            <div class="border-t border-surface-highlight pt-3 mt-3">
+              <a
+                href="/packages"
+                class="block px-3 py-2 text-sm text-primary hover:text-white hover:bg-surface-highlight rounded-sm transition-colors text-center font-medium"
+              >
+                View All Packages →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <a
         href="/pricing"
         class="hover:text-primary rounded-sm px-3 py-2 text-sm font-medium text-text-muted transition-colors"
