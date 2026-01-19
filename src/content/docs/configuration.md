@@ -1,6 +1,8 @@
 ---
-title: Configuration
-description: Complete configuration options for Tracehound components.
+title: 'Configuration'
+description: 'Complete configuration options for Tracehound components.'
+category: 'reference'
+order: 1
 ---
 
 # Configuration
@@ -260,7 +262,7 @@ const quarantine = createQuarantine(
     maxBytes: 200_000_000,
     evictionPolicy: 'priority',
   },
-  auditChain
+  auditChain,
 )
 
 // Rate limiting per source
@@ -291,6 +293,6 @@ export { agent, quarantine, watcher }
 
 ## See Also
 
-- [Getting Started](/docs/getting-started)
+- [Quickstart](/docs/quickstart)
 - [API Reference](/docs/api)
-- [Roadmap](/docs/roadmap)
+- [Core Package](/docs/packages/core)

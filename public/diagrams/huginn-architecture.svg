@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" fill="none">
+  <defs>
+    <linearGradient id="feedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#de5223" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#de5223" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="huginnGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8dde23" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#8dde23" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="340" fill="#080808"/>
+
+  <!-- Threat Intelligence Feeds section -->
+  <rect x="40" y="20" width="520" height="70" rx="10" fill="#111111" stroke="#de5223" stroke-width="1"/>
+  <text x="300" y="45" text-anchor="middle" fill="#de5223" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600">Threat Intelligence Feeds</text>
+
+  <!-- Feed items -->
+  <g transform="translate(80, 55)">
+    <rect x="0" y="0" width="100" height="26" rx="4" fill="url(#feedGrad)" stroke="#de5223" stroke-width="0.5"/>
+    <text x="50" y="17" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">AbuseIPDB</text>
+  </g>
+  <g transform="translate(200, 55)">
+    <rect x="0" y="0" width="130" height="26" rx="4" fill="url(#feedGrad)" stroke="#de5223" stroke-width="0.5"/>
+    <text x="65" y="17" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Emerging Threats</text>
+  </g>
+  <g transform="translate(350, 55)">
+    <rect x="0" y="0" width="100" height="26" rx="4" fill="url(#feedGrad)" stroke="#de5223" stroke-width="0.5"/>
+    <text x="50" y="17" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Custom Feeds</text>
+  </g>
+
+  <!-- Arrow down -->
+  <line x1="300" y1="90" x2="300" y2="120" stroke="#888888" stroke-width="1.5"/>
+  <polygon points="300,120 296,113 304,113" fill="#888888"/>
+
+  <!-- Huginn section -->
+  <rect x="40" y="125" width="520" height="80" rx="10" fill="url(#huginnGrad)" stroke="#8dde23" stroke-width="1.5"/>
+  <text x="300" y="152" text-anchor="middle" fill="#8dde23" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600">Huginn</text>
+
+  <!-- Huginn internal flow -->
+  <g transform="translate(80, 165)">
+    <rect x="0" y="0" width="100" height="28" rx="4" fill="#111111" stroke="#8dde23" stroke-width="0.5"/>
+    <text x="50" y="18" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Feed Sync</text>
+  </g>
+  <path d="M185 179 L205 179" stroke="#8dde23" stroke-width="1"/>
+  <polygon points="205,179 200,176 200,182" fill="#8dde23"/>
+
+  <g transform="translate(210, 165)">
+    <rect x="0" y="0" width="100" height="28" rx="4" fill="#111111" stroke="#8dde23" stroke-width="0.5"/>
+    <text x="50" y="18" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">IOC Database</text>
+  </g>
+  <path d="M315 179 L335 179" stroke="#8dde23" stroke-width="1"/>
+  <polygon points="335,179 330,176 330,182" fill="#8dde23"/>
+
+  <g transform="translate(340, 165)">
+    <rect x="0" y="0" width="130" height="28" rx="4" fill="#111111" stroke="#8dde23" stroke-width="0.5"/>
+    <text x="65" y="18" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Correlation Engine</text>
+  </g>
+
+  <!-- Arrow down -->
+  <line x1="300" y1="205" x2="300" y2="235" stroke="#888888" stroke-width="1.5"/>
+  <polygon points="300,235 296,228 304,228" fill="#888888"/>
+
+  <!-- Tracehound Core section -->
+  <rect x="40" y="240" width="520" height="80" rx="10" fill="url(#coreGrad)" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="300" y="268" text-anchor="middle" fill="#3b82f6" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600">Tracehound Core</text>
+  <text x="300" y="295" text-anchor="middle" fill="#888888" font-family="Inter, system-ui, sans-serif" font-size="11">Evidence enriched with threat intel context</text>
+</svg>

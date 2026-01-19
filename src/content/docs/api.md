@@ -1,6 +1,8 @@
 ---
-title: API Reference
-description: Complete API documentation for @tracehound/core.
+title: 'API Reference'
+description: 'Complete API documentation for @tracehound/core.'
+category: 'reference'
+order: 2
 ---
 
 # API Reference
@@ -132,7 +134,7 @@ const quarantine = createQuarantine(
     maxBytes: 100_000_000, // 100MB
     evictionPolicy: 'priority', // 'priority' | 'lru' | 'fifo'
   },
-  auditChain
+  auditChain,
 )
 ```
 
@@ -252,7 +254,7 @@ app.use(
     quarantine: { maxCount: 1000 },
     rateLimit: { windowMs: 60_000, maxRequests: 100 },
     detector: (req) => myWafCheck(req),
-  })
+  }),
 )
 ```
 

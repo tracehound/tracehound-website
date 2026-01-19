@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" fill="none">
+  <defs>
+    <linearGradient id="flowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8dde23" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#8dde23" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="200" fill="#080808"/>
+
+  <!-- Request -->
+  <rect x="20" y="70" width="90" height="50" rx="6" fill="url(#flowGrad)" stroke="#3b82f6" stroke-width="1"/>
+  <text x="65" y="100" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="12">Request</text>
+
+  <!-- Arrow -->
+  <path d="M115 95 L145 95" stroke="#888888" stroke-width="1.5"/>
+  <polygon points="145,95 138,91 138,99" fill="#888888"/>
+
+  <!-- Quarantine -->
+  <rect x="150" y="60" width="110" height="70" rx="8" fill="#111111" stroke="#de5223" stroke-width="1.5"/>
+  <text x="205" y="92" text-anchor="middle" fill="#de5223" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600">Quarantine</text>
+  <text x="205" y="112" text-anchor="middle" fill="#888888" font-family="Inter, system-ui, sans-serif" font-size="10">(hot)</text>
+
+  <!-- Arrow -->
+  <path d="M265 95 L295 95" stroke="#888888" stroke-width="1.5"/>
+  <polygon points="295,95 288,91 288,99" fill="#888888"/>
+
+  <!-- AuditChain -->
+  <rect x="300" y="60" width="110" height="70" rx="8" fill="#111111" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="355" y="92" text-anchor="middle" fill="#3b82f6" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600">AuditChain</text>
+  <text x="355" y="112" text-anchor="middle" fill="#888888" font-family="Inter, system-ui, sans-serif" font-size="10">(integrity)</text>
+
+  <!-- Arrow -->
+  <path d="M415 95 L445 95" stroke="#888888" stroke-width="1.5"/>
+  <polygon points="445,95 438,91 438,99" fill="#888888"/>
+
+  <!-- Cold Storage -->
+  <rect x="450" y="60" width="130" height="70" rx="8" fill="#111111" stroke="#888888" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="515" y="92" text-anchor="middle" fill="#888888" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600">Cold Storage</text>
+  <text x="515" y="112" text-anchor="middle" fill="#666666" font-family="Inter, system-ui, sans-serif" font-size="10">(archive)</text>
+</svg>

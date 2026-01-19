@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 160" fill="none">
+  <defs>
+    <linearGradient id="talosGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8dde23" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#8dde23" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="160" fill="#080808"/>
+
+  <!-- Main flow -->
+  <g transform="translate(20, 35)">
+    <!-- Request -->
+    <rect x="0" y="0" width="80" height="40" rx="6" fill="#111111" stroke="#3b82f6" stroke-width="1"/>
+    <text x="40" y="24" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="11">Request</text>
+
+    <!-- Arrow -->
+    <path d="M85 20 L110 20" stroke="#888888" stroke-width="1.5"/>
+    <polygon points="110,20 103,16 103,24" fill="#888888"/>
+
+    <!-- Tracehound Core -->
+    <rect x="115" y="0" width="110" height="40" rx="6" fill="#111111" stroke="#3b82f6" stroke-width="1"/>
+    <text x="170" y="18" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Tracehound</text>
+    <text x="170" y="30" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Core</text>
+
+    <!-- Arrow -->
+    <path d="M230 20 L255 20" stroke="#888888" stroke-width="1.5"/>
+    <polygon points="255,20 248,16 248,24" fill="#888888"/>
+
+    <!-- Talos -->
+    <rect x="260" y="0" width="80" height="40" rx="6" fill="url(#talosGrad)" stroke="#8dde23" stroke-width="1.5"/>
+    <text x="300" y="24" text-anchor="middle" fill="#8dde23" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600">Talos</text>
+
+    <!-- Arrow -->
+    <path d="M345 20 L370 20" stroke="#888888" stroke-width="1.5"/>
+    <polygon points="370,20 363,16 363,24" fill="#888888"/>
+
+    <!-- Policy Engine -->
+    <rect x="375" y="0" width="100" height="40" rx="6" fill="#111111" stroke="#de5223" stroke-width="1"/>
+    <text x="425" y="18" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Policy</text>
+    <text x="425" y="30" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Engine</text>
+
+    <!-- Arrow -->
+    <path d="M480 20 L505 20" stroke="#888888" stroke-width="1.5"/>
+    <polygon points="505,20 498,16 498,24" fill="#888888"/>
+
+    <!-- Decision -->
+    <rect x="510" y="0" width="70" height="40" rx="6" fill="#111111" stroke="#8dde23" stroke-width="1"/>
+    <text x="545" y="24" text-anchor="middle" fill="#8dde23" font-family="Inter, system-ui, sans-serif" font-size="11">Decision</text>
+  </g>
+
+  <!-- Cache branch from Talos -->
+  <line x1="300" y1="75" x2="300" y2="100" stroke="#8dde23" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Cache decision box -->
+  <rect x="220" y="100" width="160" height="40" rx="6" fill="#111111" stroke="#888888" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="300" y="124" text-anchor="middle" fill="#888888" font-family="Inter, system-ui, sans-serif" font-size="10">Cache hit? → Use cached decision</text>
+</svg>

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" fill="none">
+  <defs>
+    <linearGradient id="mainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="workerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8dde23" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#8dde23" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="280" fill="#080808"/>
+
+  <!-- Main Thread section -->
+  <rect x="40" y="30" width="520" height="70" rx="10" fill="url(#mainGrad)" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="300" y="55" text-anchor="middle" fill="#3b82f6" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600">Main Thread</text>
+
+  <!-- Main flow items -->
+  <g transform="translate(80, 65)">
+    <rect x="0" y="0" width="80" height="26" rx="4" fill="#111111" stroke="#3b82f6" stroke-width="0.5"/>
+    <text x="40" y="17" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Your App</text>
+  </g>
+  <path d="M165 78 L195 78" stroke="#3b82f6" stroke-width="1"/>
+  <polygon points="195,78 188,74 188,82" fill="#3b82f6"/>
+
+  <g transform="translate(200, 65)">
+    <rect x="0" y="0" width="120" height="26" rx="4" fill="#111111" stroke="#3b82f6" stroke-width="0.5"/>
+    <text x="60" y="17" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Tracehound Core</text>
+  </g>
+  <path d="M325 78 L355 78" stroke="#3b82f6" stroke-width="1"/>
+  <polygon points="355,78 348,74 348,82" fill="#3b82f6"/>
+
+  <g transform="translate(360, 65)">
+    <rect x="0" y="0" width="80" height="26" rx="4" fill="#111111" stroke="#3b82f6" stroke-width="0.5"/>
+    <text x="40" y="17" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Response</text>
+  </g>
+
+  <!-- Vertical connector with label -->
+  <line x1="260" y1="100" x2="260" y2="155" stroke="#888888" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="275" y="130" fill="#888888" font-family="Inter, system-ui, sans-serif" font-size="9">Telemetry</text>
+  <text x="275" y="142" fill="#888888" font-family="Inter, system-ui, sans-serif" font-size="9">(non-blocking)</text>
+  <polygon points="260,155 256,148 264,148" fill="#888888"/>
+
+  <!-- Argos Worker section -->
+  <rect x="40" y="160" width="520" height="100" rx="10" fill="url(#workerGrad)" stroke="#8dde23" stroke-width="1.5"/>
+  <text x="300" y="188" text-anchor="middle" fill="#8dde23" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600">Argos Worker</text>
+
+  <!-- Worker flow items -->
+  <g transform="translate(60, 205)">
+    <rect x="0" y="0" width="100" height="40" rx="4" fill="#111111" stroke="#8dde23" stroke-width="0.5"/>
+    <text x="50" y="24" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Ring Buffer</text>
+  </g>
+  <path d="M165 225 L190 225" stroke="#8dde23" stroke-width="1"/>
+  <polygon points="190,225 183,221 183,229" fill="#8dde23"/>
+
+  <g transform="translate(195, 205)">
+    <rect x="0" y="0" width="100" height="40" rx="4" fill="#111111" stroke="#8dde23" stroke-width="0.5"/>
+    <text x="50" y="24" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Analysis</text>
+  </g>
+  <path d="M300 225 L325 225" stroke="#8dde23" stroke-width="1"/>
+  <polygon points="325,225 318,221 318,229" fill="#8dde23"/>
+
+  <g transform="translate(330, 205)">
+    <rect x="0" y="0" width="80" height="40" rx="4" fill="#111111" stroke="#8dde23" stroke-width="0.5"/>
+    <text x="40" y="24" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Signals</text>
+  </g>
+  <path d="M415 225 L440 225" stroke="#8dde23" stroke-width="1"/>
+  <polygon points="440,225 433,221 433,229" fill="#8dde23"/>
+
+  <g transform="translate(445, 205)">
+    <rect x="0" y="0" width="80" height="40" rx="4" fill="#111111" stroke="#8dde23" stroke-width="0.5"/>
+    <text x="40" y="24" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="10">Agent</text>
+  </g>
+</svg>

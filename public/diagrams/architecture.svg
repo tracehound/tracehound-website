@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" fill="none">
+  <defs>
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8dde23" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#8dde23" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="secondaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.05"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="400" fill="#080808"/>
+
+  <!-- Main container -->
+  <rect x="40" y="30" width="620" height="340" rx="12" fill="#111111" stroke="#222222" stroke-width="1"/>
+
+  <!-- Title bar -->
+  <rect x="40" y="30" width="620" height="40" rx="12" fill="#111111"/>
+  <rect x="40" y="58" width="620" height="12" fill="#111111"/>
+  <text x="350" y="56" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600">Your Application</text>
+  <line x1="40" y1="70" x2="660" y2="70" stroke="#222222" stroke-width="1"/>
+
+  <!-- Flow: Request → WAF → Agent → Response -->
+  <g transform="translate(60, 100)">
+    <!-- Request -->
+    <rect x="0" y="0" width="100" height="44" rx="6" fill="url(#secondaryGrad)" stroke="#3b82f6" stroke-width="1"/>
+    <text x="50" y="26" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="12">Request</text>
+
+    <!-- Arrow 1 -->
+    <path d="M105 22 L135 22" stroke="#888888" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <polygon points="135,22 128,18 128,26" fill="#888888"/>
+
+    <!-- WAF -->
+    <rect x="140" y="0" width="120" height="44" rx="6" fill="url(#secondaryGrad)" stroke="#3b82f6" stroke-width="1"/>
+    <text x="200" y="26" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="12">WAF / Detector</text>
+
+    <!-- Arrow 2 -->
+    <path d="M265 22 L295 22" stroke="#888888" stroke-width="1.5"/>
+    <polygon points="295,22 288,18 288,26" fill="#888888"/>
+
+    <!-- Tracehound Agent (highlighted) -->
+    <rect x="300" y="0" width="140" height="44" rx="6" fill="url(#primaryGrad)" stroke="#8dde23" stroke-width="1.5" filter="url(#glow)"/>
+    <text x="370" y="26" text-anchor="middle" fill="#8dde23" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600">Tracehound Agent</text>
+
+    <!-- Arrow 3 -->
+    <path d="M445 22 L475 22" stroke="#888888" stroke-width="1.5"/>
+    <polygon points="475,22 468,18 468,26" fill="#888888"/>
+
+    <!-- Response -->
+    <rect x="480" y="0" width="100" height="44" rx="6" fill="url(#secondaryGrad)" stroke="#3b82f6" stroke-width="1"/>
+    <text x="530" y="26" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="12">Response</text>
+  </g>
+
+  <!-- Vertical connector from Agent -->
+  <line x1="430" y1="166" x2="430" y2="200" stroke="#8dde23" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Bottom section: Quarantine + AuditChain -->
+  <g transform="translate(170, 210)">
+    <!-- Quarantine box -->
+    <rect x="0" y="0" width="160" height="80" rx="8" fill="#111111" stroke="#de5223" stroke-width="1"/>
+    <text x="80" y="30" text-anchor="middle" fill="#de5223" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600">Quarantine</text>
+    <text x="80" y="52" text-anchor="middle" fill="#888888" font-family="Inter, system-ui, sans-serif" font-size="11">(evidence buffer)</text>
+
+    <!-- Connector -->
+    <line x1="165" y1="40" x2="195" y2="40" stroke="#888888" stroke-width="1"/>
+
+    <!-- AuditChain box -->
+    <rect x="200" y="0" width="160" height="80" rx="8" fill="#111111" stroke="#3b82f6" stroke-width="1"/>
+    <text x="280" y="30" text-anchor="middle" fill="#3b82f6" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600">AuditChain</text>
+    <text x="280" y="52" text-anchor="middle" fill="#888888" font-family="Inter, system-ui, sans-serif" font-size="11">(Merkle integrity)</text>
+  </g>
+
+  <!-- Vertical connector to Cold Storage -->
+  <line x1="350" y1="290" x2="350" y2="320" stroke="#888888" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Cold Storage (optional) -->
+  <rect x="260" y="320" width="180" height="36" rx="6" fill="#111111" stroke="#222222" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="350" y="343" text-anchor="middle" fill="#888888" font-family="Inter, system-ui, sans-serif" font-size="11">Cold Storage (optional)</text>
+</svg>

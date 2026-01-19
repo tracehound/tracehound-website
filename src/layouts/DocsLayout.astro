@@ -6,11 +6,43 @@ import Layout from './Layout.astro'
 const allDocs = await getCollection('docs')
 const { title, description } = Astro.props
 
-// Sort docs logic or define manual order
-const order = ['getting-started', 'configuration', 'api', 'roadmap']
-const sortedDocs = allDocs.sort((a, b) => {
-  return order.indexOf(a.slug) - order.indexOf(b.slug)
-})
+// Group docs by category
+const categories = {
+  'getting-started': {
+    label: 'Getting Started',
+    order: ['introduction', 'quickstart'],
+  },
+  reference: {
+    label: 'Reference',
+    order: ['configuration', 'api'],
+  },
+  packages: {
+    label: 'Packages',
+    order: [
+      'packages/core',
+      'packages/horizon',
+      'packages/argos',
+      'packages/talos',
+      'packages/huginn',
+      'packages/muninn',
+      'packages/norns',
+      'packages/furies',
+      'packages/watchtower',
+    ],
+  },
+  guides: {
+    label: 'Guides',
+    order: ['concepts', 'advanced', 'examples'],
+  },
+}
+
+// Sort docs into categories
+const categorizedDocs = Object.entries(categories)
+  .map(([key, config]) => {
+    const docs = config.order.map((slug) => allDocs.find((d) => d.slug === slug)).filter(Boolean)
+    return { key, label: config.label, docs }
+  })
+  .filter((cat) => cat.docs.length > 0)
 ---
 
 <Layout title={title} description={description}>
@@ -18,20 +50,38 @@ const sortedDocs = allDocs.sort((a, b) => {
   <div class="container-custom flex-1 flex flex-col md:flex-row gap-8 py-8 w-full">
     <!-- Sidebar -->
     <aside class="w-full md:w-64 shrink-0">
-      <nav class="sticky top-24 flex flex-col gap-2">
-        <span class="text-sm font-bold text-white mb-2 uppercase tracking-wider">Documentation</span
-        >
+      <nav class="sticky top-24 flex flex-col gap-4 overflow-auto max-h-[calc(100vh-6rem)]">
         {
-          sortedDocs.map((doc) => (
-            <a
-              href={`/docs/${doc.slug}`}
-              class={`px-3 py-2 rounded-sm text-sm transition-colors ${
-                Astro.url.pathname.includes(doc.slug)
-                  ? 'bg-primary/10 text-primary border border-primary/20'
-                  : 'text-text-muted hover:text-white hover:bg-surface-highlight'
-              }`}>
-              {doc.data.title}
-            </a>
+          categorizedDocs.map((category) => (
+            <div class="mb-4">
+              <span
+                class={
+                  'text-xs font-bold text-text-muted mb-2 uppercase tracking-wider block px-3'
+                }>
+                {category.label}
+              </span>
+              <div class="flex flex-col">
+                {category.docs.map((doc) => {
+                  if (!doc) return null
+
+                  const isActive = Astro.url.pathname.includes(doc.slug)
+                  const isPackage = doc.slug.startsWith('packages/')
+                  const displayName = isPackage ? doc.data.title : doc.data.title
+
+                  return (
+                    <a
+                      href={`/docs/${doc.slug}`}
+                      class={`px-3 py-2 rounded-sm text-sm transition-colors ${
+                        isActive
+                          ? 'bg-primary/10 text-primary border border-primary/20'
+                          : 'text-text-muted hover:text-white hover:bg-surface-highlight'
+                      }`}>
+                      {displayName}
+                    </a>
+                  )
+                })}
+              </div>
+            </div>
           ))
         }
       </nav>

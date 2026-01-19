@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 200" fill="none">
+  <defs>
+    <linearGradient id="muninnGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="550" height="200" fill="#080808"/>
+
+  <!-- Evidence -->
+  <rect x="20" y="50" width="90" height="44" rx="6" fill="#111111" stroke="#de5223" stroke-width="1"/>
+  <text x="65" y="77" text-anchor="middle" fill="#eaeaea" font-family="Inter, system-ui, sans-serif" font-size="12">Evidence</text>
+
+  <!-- Arrow -->
+  <path d="M115 72 L145 72" stroke="#888888" stroke-width="1.5"/>
+  <polygon points="145,72 138,68 138,76" fill="#888888"/>
+
+  <!-- Quarantine -->
+  <rect x="150" y="50" width="100" height="44" rx="6" fill="#111111" stroke="#de5223" stroke-width="1"/>
+  <text x="200" y="77" text-anchor="middle" fill="#de5223" font-family="Inter, system-ui, sans-serif" font-size="12">Quarantine</text>
+
+  <!-- Arrow -->
+  <path d="M255 72 L285 72" stroke="#888888" stroke-width="1.5"/>
+  <polygon points="285,72 278,68 278,76" fill="#888888"/>
+
+  <!-- Muninn -->
+  <rect x="290" y="30" width="110" height="84" rx="8" fill="url(#muninnGrad)" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="345" y="58" text-anchor="middle" fill="#3b82f6" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600">Muninn</text>
+
+  <!-- Muninn branches -->
+  <line x1="345" y1="70" x2="345" y2="105" stroke="#3b82f6" stroke-width="1"/>
+
+  <!-- Branch labels -->
+  <text x="345" y="80" text-anchor="middle" fill="#888888" font-family="Inter, system-ui, sans-serif" font-size="9">├─ Pattern Detection</text>
+  <text x="345" y="92" text-anchor="middle" fill="#888888" font-family="Inter, system-ui, sans-serif" font-size="9">├─ Aggregation</text>
+  <text x="345" y="104" text-anchor="middle" fill="#888888" font-family="Inter, system-ui, sans-serif" font-size="9">└─ Query API</text>
+
+  <!-- Arrow -->
+  <path d="M405 72 L435 72" stroke="#888888" stroke-width="1.5"/>
+  <polygon points="435,72 428,68 428,76" fill="#888888"/>
+
+  <!-- Time-Series DB -->
+  <rect x="440" y="50" width="100" height="44" rx="6" fill="#111111" stroke="#8dde23" stroke-width="1"/>
+  <text x="490" y="68" text-anchor="middle" fill="#8dde23" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600">Time-Series</text>
+  <text x="490" y="82" text-anchor="middle" fill="#8dde23" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600">DB</text>
+</svg>
