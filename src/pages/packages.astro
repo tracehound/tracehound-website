@@ -53,6 +53,18 @@ const layers = [
         features: ['Status monitoring', 'Evidence inspection', 'Configuration management'],
         href: '/docs/getting-started',
       },
+      {
+        name: '@tracehound/horizon',
+        shortName: 'Horizon',
+        description: 'Config extender for scale-out. Unlocks unlimited pools, multi-instance, mTLS.',
+        icon: Zap,
+        status: 'In Development',
+        statusColor: 'text-yellow-400',
+        features: ['Unlimited process pools', 'Redis/KeyDB coordination', 'mTLS enforcement', 'Policy broker'],
+        href: '/docs/horizon',
+        isPaid: true,
+        price: '$9 perpetual',
+      },
     ],
   },
   {
@@ -195,6 +207,7 @@ const layers = [
   {layers.map((layer, layerIndex) => {
     const colorMap = {
       'primary': { bg: 'bg-primary/5', border: 'border-primary/20', text: 'text-primary' },
+      'cyan-500': { bg: 'bg-cyan-500/5', border: 'border-cyan-500/20', text: 'text-cyan-400' },
       'purple-500': { bg: 'bg-purple-500/5', border: 'border-purple-500/20', text: 'text-purple-400' },
       'orange-500': { bg: 'bg-orange-500/5', border: 'border-orange-500/20', text: 'text-orange-400' },
       'blue-500': { bg: 'bg-blue-500/5', border: 'border-blue-500/20', text: 'text-blue-400' },

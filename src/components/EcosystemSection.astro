@@ -12,7 +12,7 @@ import {
 } from 'lucide-react'
 import { cn } from '../utils'
 
-// Open-Core model: Substrate + Satellites + Advanced + Cockpit
+// Open-Core model: Substrate + Satellites + Advanced + Watchtower
 const layers = [
   {
     name: 'Substrate',
@@ -28,6 +28,17 @@ const layers = [
         color: '#8dde23',
         icon: Shield,
         href: '/docs/getting-started',
+      },
+      {
+        name: 'Horizon',
+        tagline: 'Config Extender',
+        description: 'Unlimited pools, multi-instance, mTLS. $9 perpetual.',
+        status: 'development',
+        statusLabel: 'In Development',
+        color: '#06b6d4',
+        icon: Zap,
+        href: '/docs/horizon',
+        isPaid: true,
       },
     ],
   },
