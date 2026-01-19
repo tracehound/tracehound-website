@@ -1,43 +1,43 @@
 ---
-import { ArrowRight, Check, X, Zap } from 'lucide-react'
+import { ArrowRight, Check, Shield, X, Zap } from 'lucide-react'
 
-// New pricing model: Per Service, Self-Service / Low-Friction
+// New pricing model: Capacity-based, Security Invariants preserved at all tiers
 const { showArgos = false } = Astro.props
 
 const tiers = [
   {
-    name: 'Community',
-    subtitle: 'Developer / POC',
-    price: 'Free',
-    period: '',
+    name: 'Starter',
+    subtitle: 'Same Security, Small Scale',
+    price: '$9',
+    period: '/ month per service',
     features: [
-      { text: 'Single instance (local state)', included: true },
-      { text: 'Core protections (Rate Limit, Agent)', included: true },
+      { text: 'Full Security Model (Agent, Quarantine, AuditChain)', included: true },
+      { text: 'HoundPool Isolation (1 process, 64MB)', included: true },
+      { text: 'Rate Limiter (token bucket)', included: true },
       { text: 'In-memory state only', included: true },
-      { text: 'Non-commercial or Revenue < $5k/mo', included: true },
       { text: 'Cold Storage', included: false },
       { text: 'Notification API', included: false },
-      { text: 'Support', included: false },
+      { text: 'Scheduler', included: false },
     ],
-    who: 'Developers, Hobbyists, POC',
+    who: 'Solo Developers, Small Projects',
     cta: 'Get Started',
-    ctaLink: '/docs/getting-started',
+    ctaLink: '/checkout/starter',
     highlight: false,
     borderColor: 'border-surface-highlight',
   },
   {
     name: 'Pro',
-    subtitle: 'Growing SaaS',
-    price: '$79',
+    subtitle: 'Scaled Operations',
+    price: '$99',
     period: '/ month per service',
     features: [
-      { text: 'Single instance', included: true },
+      { text: 'Full Security Model (all Starter features)', included: true },
+      { text: 'HoundPool Scaling (8 processes, 512MB)', included: true },
       { text: 'Notification API (SIEM, SOC, webhooks)', included: true },
       { text: 'Async Codec (streaming compression)', included: true },
       { text: 'Evidence Export (S3, R2, GCS)', included: true },
       { text: 'Retention & Eviction Policies', included: true },
       { text: 'Email Support (24h SLA)', included: true },
-      { text: 'Commercial License', included: true },
     ],
     who: 'Growing SaaS, Bootstrapped Startups',
     cta: 'Choose this plan',
@@ -47,17 +47,17 @@ const tiers = [
   },
   {
     name: 'Enterprise',
-    subtitle: 'Cluster / High Scale',
+    subtitle: 'Unlimited + SLA',
     price: '$499+',
     period: '/ month',
     features: [
+      { text: 'Full Security Model (all Pro features)', included: true },
+      { text: 'HoundPool Unlimited Scaling', included: true },
       { text: 'Multi-Instance (Redis coordination)', included: true },
-      { text: 'Distributed state', included: true },
       { text: 'SIEM Integration (Splunk, Elastic, Datadog)', included: true },
       { text: 'Compliance Reports (SOC2, HIPAA)', included: true },
       { text: 'Priority Support / Slack', included: true },
       { text: 'SLA Guarantee', included: true },
-      { text: 'Argos included', included: true },
     ],
     who: 'Scale-up, Fintech, High-Traffic E-commerce',
     cta: 'Contact us',
