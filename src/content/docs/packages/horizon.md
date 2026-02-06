@@ -165,6 +165,6 @@ Development previews are available. Contact us for access.
 
 ## Related
 
-- [Getting Started](/docs/getting-started) — Core setup guide
+- [Getting Started](/docs/quickstart) — Core setup guide
 - [Configuration](/docs/configuration) — Full configuration reference
 - [Packages](/docs/packages) — All Tracehound packages

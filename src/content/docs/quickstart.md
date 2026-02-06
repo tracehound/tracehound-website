@@ -1,7 +1,7 @@
 ---
 title: 'Quickstart'
 description: 'Install and configure Tracehound in under 5 minutes.'
-category: 'getting-started'
+category: 'quickstart'
 order: 2
 ---
 

@@ -25,9 +25,24 @@ interface PipelineStep {
 }
 
 const pipelineSteps: PipelineStep[] = [
-  { id: 'scent', label: 'Scent', icon: FileWarning, description: 'Request captured as immutable Scent object' },
-  { id: 'rateLimit', label: 'Rate Check', icon: Gauge, description: 'Token bucket rate limiting per source' },
-  { id: 'signature', label: 'Signature', icon: Fingerprint, description: 'SHA-256 content signature generated' },
+  {
+    id: 'scent',
+    label: 'Scent',
+    icon: FileWarning,
+    description: 'Request captured as immutable Scent object',
+  },
+  {
+    id: 'rateLimit',
+    label: 'Rate Check',
+    icon: Gauge,
+    description: 'Token bucket rate limiting per source',
+  },
+  {
+    id: 'signature',
+    label: 'Signature',
+    icon: Fingerprint,
+    description: 'SHA-256 content signature generated',
+  },
   { id: 'agent', label: 'Agent', icon: Shield, description: 'External threat signal evaluated' },
 ]
 
@@ -78,7 +93,7 @@ export default function InteractiveArchitecture() {
   const isClean = flowType === 'clean'
 
   return (
-    <section className="py-24 overflow-hidden">
+    <section className="py-24 overflow-hidden bg-background">
       <div className="container-custom">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
@@ -86,7 +101,8 @@ export default function InteractiveArchitecture() {
             How <span className="text-primary">Tracehound</span> Works
           </h2>
           <p className="text-text-muted text-lg">
-            Every request flows through a deterministic pipeline. No decisions. No variance. Just security.
+            Every request flows through a deterministic pipeline. No decisions. No variance. Just
+            security.
           </p>
         </div>
 
@@ -95,22 +111,22 @@ export default function InteractiveArchitecture() {
           <button
             onClick={() => runAnimation('clean')}
             disabled={isAnimating}
-            className={`px-6 py-3 rounded-sm border text-sm font-medium transition-all flex items-center gap-2 ${!isAnimating
+            className={`px-6 py-3 rounded-sm border text-sm font-medium transition-all flex items-center gap-2 ${
+              !isAnimating
                 ? 'border-primary/50 text-primary hover:bg-primary/10'
                 : 'border-surface-highlight text-text-muted cursor-not-allowed'
-              }`}
-          >
+            }`}>
             <CheckCircle2 className="w-4 h-4" />
             Simulate Clean Request
           </button>
           <button
             onClick={() => runAnimation('threat')}
             disabled={isAnimating}
-            className={`px-6 py-3 rounded-sm border text-sm font-medium transition-all flex items-center gap-2 ${!isAnimating
+            className={`px-6 py-3 rounded-sm border text-sm font-medium transition-all flex items-center gap-2 ${
+              !isAnimating
                 ? 'border-red-500/50 text-red-400 hover:bg-red-500/10'
                 : 'border-surface-highlight text-text-muted cursor-not-allowed'
-              }`}
-          >
+            }`}>
             <XCircle className="w-4 h-4" />
             Simulate Threat
           </button>
@@ -141,10 +157,10 @@ export default function InteractiveArchitecture() {
                               : '#ef4444'
                             : '#2a2a2a',
                     }}
-                    className="relative flex flex-col items-center"
-                  >
+                    className="relative flex flex-col items-center">
                     <div
-                      className={`w-16 h-16 md:w-20 md:h-20 rounded-lg border-2 flex items-center justify-center transition-all duration-300 ${state === 'completed'
+                      className={`w-16 h-16 md:w-20 md:h-20 rounded-lg border-2 flex items-center justify-center transition-all duration-300 ${
+                        state === 'completed'
                           ? isClean
                             ? 'bg-primary/20 border-primary text-primary'
                             : 'bg-red-500/20 border-red-500 text-red-400'
@@ -153,14 +169,13 @@ export default function InteractiveArchitecture() {
                               ? 'bg-primary/10 border-primary text-primary shadow-[0_0_20px_rgba(242,201,76,0.3)]'
                               : 'bg-red-500/10 border-red-500 text-red-400 shadow-[0_0_20px_rgba(239,68,68,0.3)]'
                             : 'bg-surface border-surface-highlight text-text-muted'
-                        }`}
-                    >
+                      }`}>
                       <Icon className="w-6 h-6 md:w-8 md:h-8" />
                     </div>
                     <span
-                      className={`mt-2 text-xs md:text-sm font-mono font-medium transition-colors ${state !== 'pending' ? 'text-white' : 'text-text-muted'
-                        }`}
-                    >
+                      className={`mt-2 text-xs md:text-sm font-mono font-medium transition-colors ${
+                        state !== 'pending' ? 'text-white' : 'text-text-muted'
+                      }`}>
                       {step.label}
                     </span>
 
@@ -171,8 +186,7 @@ export default function InteractiveArchitecture() {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs text-text-muted bg-background/90 px-3 py-1.5 rounded border border-surface-highlight"
-                        >
+                          className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs text-text-muted bg-background/90 px-3 py-1.5 rounded border border-surface-highlight">
                           {step.description}
                         </motion.div>
                       )}
@@ -182,12 +196,13 @@ export default function InteractiveArchitecture() {
                   {/* Arrow between steps */}
                   {index < pipelineSteps.length - 1 && (
                     <ArrowRight
-                      className={`w-5 h-5 hidden md:block transition-colors ${getStepState(pipelineSteps[index + 1].id) !== 'pending'
+                      className={`w-5 h-5 hidden md:block transition-colors ${
+                        getStepState(pipelineSteps[index + 1].id) !== 'pending'
                           ? isClean
                             ? 'text-primary'
                             : 'text-red-400'
                           : 'text-surface-highlight'
-                        }`}
+                      }`}
                     />
                   )}
                 </div>
@@ -204,14 +219,13 @@ export default function InteractiveArchitecture() {
                   opacity: currentStep === 'result' && isClean ? 1 : 0.3,
                   scale: currentStep === 'result' && isClean ? 1.05 : 1,
                 }}
-                className="flex flex-col items-center gap-3"
-              >
+                className="flex flex-col items-center gap-3">
                 <div
-                  className={`w-20 h-20 rounded-full border-2 flex items-center justify-center transition-all ${currentStep === 'result' && isClean
+                  className={`w-20 h-20 rounded-full border-2 flex items-center justify-center transition-all ${
+                    currentStep === 'result' && isClean
                       ? 'border-primary bg-primary/20 text-primary shadow-[0_0_30px_rgba(242,201,76,0.4)]'
                       : 'border-surface-highlight bg-surface text-text-muted'
-                    }`}
-                >
+                  }`}>
                   <Server className="w-8 h-8" />
                 </div>
                 <span className="text-sm font-mono font-bold text-primary">PASS → App</span>
@@ -227,28 +241,31 @@ export default function InteractiveArchitecture() {
                   opacity: currentStep === 'result' && !isClean ? 1 : 0.3,
                   scale: currentStep === 'result' && !isClean ? 1.05 : 1,
                 }}
-                className="flex flex-col items-center gap-3"
-              >
+                className="flex flex-col items-center gap-3">
                 <div className="flex items-center gap-4">
                   <div
-                    className={`w-16 h-16 rounded-lg border-2 flex items-center justify-center transition-all ${currentStep === 'result' && !isClean
+                    className={`w-16 h-16 rounded-lg border-2 flex items-center justify-center transition-all ${
+                      currentStep === 'result' && !isClean
                         ? 'border-red-500 bg-red-500/20 text-red-400'
                         : 'border-surface-highlight bg-surface text-text-muted'
-                      }`}
-                  >
+                    }`}>
                     <Database className="w-6 h-6" />
                   </div>
-                  <ArrowRight className={`w-4 h-4 ${!isClean ? 'text-red-400' : 'text-surface-highlight'}`} />
+                  <ArrowRight
+                    className={`w-4 h-4 ${!isClean ? 'text-red-400' : 'text-surface-highlight'}`}
+                  />
                   <div
-                    className={`w-16 h-16 rounded-lg border-2 flex items-center justify-center transition-all ${currentStep === 'result' && !isClean
+                    className={`w-16 h-16 rounded-lg border-2 flex items-center justify-center transition-all ${
+                      currentStep === 'result' && !isClean
                         ? 'border-red-500 bg-red-500/20 text-red-400'
                         : 'border-surface-highlight bg-surface text-text-muted'
-                      }`}
-                  >
+                    }`}>
                     <Snowflake className="w-6 h-6" />
                   </div>
                 </div>
-                <span className="text-sm font-mono font-bold text-red-400">QUARANTINE → Cold Storage</span>
+                <span className="text-sm font-mono font-bold text-red-400">
+                  QUARANTINE → Cold Storage
+                </span>
                 <span className="text-xs text-text-muted">Evidence preserved, request blocked</span>
               </motion.div>
             </div>

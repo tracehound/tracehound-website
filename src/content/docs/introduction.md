@@ -1,7 +1,7 @@
 ---
 title: 'Introduction'
 description: 'What is Tracehound and why it exists'
-category: 'getting-started'
+category: 'quickstart'
 order: 1
 ---
 
