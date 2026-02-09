@@ -57,7 +57,7 @@ Tracehound fills this gap:
 2. **Quarantine**: Threat is isolated with priority
 3. **Chain**: Evidence is appended to tamper-proof audit chain
 4. **Evict**: When full, low-priority evidence is evicted first
-5. **Export**: High-priority evidence can flow to cold storage
+5. **Export**: Evidence can flow to S3/R2/GCS cold storage (v1.1.0+)
 
 ---
 

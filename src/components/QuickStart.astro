@@ -39,15 +39,20 @@ import { Copy, Terminal } from 'lucide-react'
         <div class="p-6 overflow-x-auto">
           <pre
             class="text-sm font-mono leading-relaxed"
-            id="code-block"><span class="text-purple-400">import</span> {'{'} createAgent, createQuarantine {'}'} <span class="text-purple-400">from</span> <span class="text-green-400">'@tracehound/core'</span>
+            id="code-block"><span class="text-purple-400">import</span> {'{'} createTracehound, generateSecureId {'}'} <span class="text-purple-400">from</span> <span class="text-green-400">'@tracehound/core'</span>
 
-<span class="text-text-muted">// Initialize with defaults</span>
-<span class="text-purple-400">const</span> quarantine = createQuarantine({'{'} maxCount: <span class="text-orange-400">1000</span> {'}'})
-<span class="text-purple-400">const</span> agent = createAgent({'{'} quarantine {'}'})
+<span class="text-text-muted">// Initialize</span>
+<span class="text-purple-400">const</span> th = createTracehound({'{'} quarantine: {'{'} maxCount: <span class="text-orange-400">1000</span> {'}'} {'}'})
 
 <span class="text-text-muted">// In your middleware</span>
 app.use((req, res, next) =&gt; {'{'}
-  <span class="text-purple-400">const</span> result = agent.intercept(createScent(req))
+  <span class="text-purple-400">const</span> result = th.agent.intercept({'{'}
+    id: generateSecureId(),
+    timestamp: Date.now(),
+    source: req.ip,
+    payload: {'{'} method: req.method, path: req.path {'}'},
+    threat: detectThreat(req),
+  {'}'})
 
   <span class="text-purple-400">if</span> (result.status === <span class="text-green-400">'quarantined'</span>) {'{'}
     <span class="text-purple-400">return</span> res.status(<span class="text-orange-400">403</span>).json({'{'} error: <span class="text-green-400">'Blocked'</span> {'}'})
@@ -79,13 +84,18 @@ app.use((req, res, next) =&gt; {'{'}
 
 <script>
   document.getElementById('copy-btn')?.addEventListener('click', () => {
-    const code = `import { createAgent, createQuarantine } from '@tracehound/core'
+    const code = `import { createTracehound, generateSecureId } from '@tracehound/core'
 
-const quarantine = createQuarantine({ maxCount: 1000 })
-const agent = createAgent({ quarantine })
+const th = createTracehound({ quarantine: { maxCount: 1000 } })
 
 app.use((req, res, next) => {
-  const result = agent.intercept(createScent(req))
+  const result = th.agent.intercept({
+    id: generateSecureId(),
+    timestamp: Date.now(),
+    source: req.ip,
+    payload: { method: req.method, path: req.path },
+    threat: detectThreat(req),
+  })
 
   if (result.status === 'quarantined') {
     return res.status(403).json({ error: 'Blocked' })

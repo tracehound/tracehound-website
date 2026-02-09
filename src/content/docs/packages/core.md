@@ -31,44 +31,58 @@ npm install @tracehound/core
 | `Quarantine`      | Evidence buffer with priority-based eviction                    |
 | `AuditChain`      | Tamper-proof Merkle chain for integrity                         |
 | `RateLimiter`     | Token bucket rate limiting                                      |
-| `HoundPool`       | Process-based isolation (8 workers max, unlimited with Horizon) |
+| `HoundPool`       | Process-based isolation (4 processes default, unlimited with Horizon) |
+| `Scheduler`       | Jittered background task execution                               |
 | `FailSafe`        | Panic handling and fail-open semantics                          |
 | `EvidenceFactory` | Evidence creation and serialization                             |
+| `SecurityState`   | Unified metrics and snapshot                                    |
+| `NotificationEmitter` | Universal event subscription (threat.detected, etc.)       |
+
+### Cold Storage (v1.1.0+)
+
+| Component            | Purpose                                              |
+| -------------------- | ---------------------------------------------------- |
+| `S3ColdStorage`      | S3-compatible adapter (AWS S3, R2, GCS, MinIO)      |
+| `createS3ColdStorage`| Factory for S3-like cold storage                      |
+| `AsyncGzipCodec`      | Non-blocking encode/decode for cold storage I/O      |
 
 ### Framework Adapters
 
-Core includes adapters for popular frameworks. These are **not separate packages** — they come bundled with `@tracehound/core`.
+Express and Fastify are **separate packages**:
+
+- `@tracehound/express` — Express middleware
+- `@tracehound/fastify` — Fastify plugin
 
 ---
 
 ## Express Adapter
 
+```bash
+npm install @tracehound/core @tracehound/express
+```
+
 ```typescript
 import express from 'express'
-import { createTracehoundMiddleware } from '@tracehound/core/express'
+import { tracehound } from '@tracehound/express'
+import { createTracehound, generateSecureId } from '@tracehound/core'
+
+const th = createTracehound({
+  quarantine: { maxCount: 5000, maxBytes: 50_000_000 },
+  rateLimit: { windowMs: 60_000, maxRequests: 100 },
+})
 
 const app = express()
 
 app.use(
-  createTracehoundMiddleware({
-    detector: (req) => {
-      // Your threat detection logic
-      if (isSuspicious(req)) {
-        return { category: 'suspicious', severity: 'medium' }
-      }
-      return undefined // Clean request
-    },
-
-    // Optional configuration
-    quarantine: {
-      maxCount: 5000,
-      maxBytes: 50_000_000,
-    },
-
-    rateLimiter: {
-      windowMs: 60_000,
-      maxRequests: 100,
-    },
+  tracehound({
+    agent: th.agent,
+    extractScent: (req) => ({
+      id: generateSecureId(),
+      timestamp: Date.now(),
+      source: req.ip || 'unknown',
+      payload: { method: req.method, path: req.path },
+      threat: isSuspicious(req) ? { category: 'suspicious', severity: 'medium' } : undefined,
+    }),
   }),
 )
 
@@ -79,18 +93,27 @@ app.listen(3000)
 
 ## Fastify Adapter
 
+```bash
+npm install @tracehound/core @tracehound/fastify
+```
+
 ```typescript
 import Fastify from 'fastify'
-import { tracehoundPlugin } from '@tracehound/core/fastify'
+import { tracehoundPlugin } from '@tracehound/fastify'
+import { createTracehound } from '@tracehound/core'
 
+const th = createTracehound()
 const fastify = Fastify()
 
 fastify.register(tracehoundPlugin, {
-  detector: (req) => {
-    if (isSuspicious(req)) {
-      return { category: 'suspicious', severity: 'medium' }
-    }
-  },
+  agent: th.agent,
+  extractScent: (req) => ({
+    id: generateSecureId(),
+    timestamp: Date.now(),
+    source: req.ip,
+    payload: { method: req.method, path: req.url },
+    threat: myDetector(req),
+  }),
 })
 
 fastify.listen({ port: 3000 })
@@ -100,109 +123,81 @@ fastify.listen({ port: 3000 })
 
 ## CLI Tools
 
-The `@tracehound/cli` commands are included:
+Install the CLI package:
 
 ```bash
-# Check Tracehound status
-npx tracehound status
-
-# Inspect quarantine
-npx tracehound quarantine list
-npx tracehound quarantine get <evidenceId>
-
-# Verify audit chain
-npx tracehound chain verify
-
-# Export evidence
-npx tracehound export --format json --output evidence.json
+npm install @tracehound/cli
+# or
+pnpm add @tracehound/cli
 ```
 
-Install globally for convenience:
-
 ```bash
-npm install -g @tracehound/core
-tracehound --help
+# System health and uptime
+tracehound status
+
+# Threat statistics by severity
+tracehound stats
+
+# Inspect quarantine contents
+tracehound inspect
+tracehound inspect --signature <sig> --limit 10
+
+# Live TUI dashboard
+tracehound watch
 ```
 
 ---
 
 ## Quick Start
 
-### Manual Integration
+### Recommended: createTracehound
 
 ```typescript
-import { createAgent, createQuarantine } from '@tracehound/core'
+import { createTracehound, generateSecureId } from '@tracehound/core'
 
-// 1. Create quarantine
-const quarantine = createQuarantine({
-  maxCount: 10000,
-  maxBytes: 100_000_000,
+const th = createTracehound({
+  quarantine: { maxCount: 10000, maxBytes: 100_000_000 },
+  rateLimit: { windowMs: 60_000, maxRequests: 100 },
 })
 
-// 2. Create agent
-const agent = createAgent({ quarantine })
-
-// 3. Intercept threats
-app.use((req, res, next) => {
-  const threat = detectThreat(req)
-
-  if (threat) {
-    const result = agent.intercept({
-      id: crypto.randomUUID(),
-      timestamp: Date.now(),
-      source: req.ip,
-      payload: { method: req.method, path: req.path },
-      threat,
-    })
-
-    if (result.status === 'quarantined') {
-      return res.status(403).json({ blocked: true })
-    }
-  }
-
-  next()
+// Intercept
+const result = th.agent.intercept({
+  id: generateSecureId(),
+  timestamp: Date.now(),
+  source: req.ip,
+  payload: { method: req.method, path: req.path },
+  threat: detectThreat(req),
 })
+
+// Subscribe to events
+th.notifications.on('threat.detected', (e) => console.log(e.payload.category))
 ```
 
 ---
 
 ## Configuration
 
-### Agent Options
+### createTracehound Options
 
 ```typescript
-const agent = createAgent({
-  quarantine, // Required
-  rateLimiter, // Optional
-  houndPool, // Optional: process isolation
-  maxPayloadSize: 100000, // Optional: 100KB limit
-  failSafe: {
-    enabled: true,
-    logErrors: true,
-  },
+const th = createTracehound({
+  maxPayloadSize: 1_000_000,
+  quarantine: { maxCount: 10000, maxBytes: 100_000_000 },
+  rateLimit: { windowMs: 60_000, maxRequests: 100, blockDurationMs: 300_000 },
+  watcher: { maxAlertsPerWindow: 10, alertWindowMs: 60_000 },
+  houndPool: { poolSize: 4, timeout: 30_000 },
 })
 ```
 
-### Quarantine Options
+### S3 Cold Storage (v1.1.0+)
 
 ```typescript
-const quarantine = createQuarantine({
-  maxCount: 10000, // Max evidence count
-  maxBytes: 100_000_000, // 100MB memory limit
-  evictionPolicy: 'priority', // 'priority' | 'fifo' | 'lru'
-  coldStorage: adapter, // Optional: S3/R2/GCS adapter
-  onEviction: (evidence) => {}, // Optional: eviction callback
-})
-```
+import { createS3ColdStorage } from '@tracehound/core'
 
-### Rate Limiter Options
-
-```typescript
-const rateLimiter = createRateLimiter({
-  windowMs: 60_000, // 1 minute window
-  maxRequests: 100, // 100 requests per window
-  blockDurationMs: 300_000, // 5 minute block
-  keyGenerator: (scent) => scent.source, // Default: source IP
+const coldStorage = createS3ColdStorage({
+  client: myS3Client, // S3LikeClient interface
+  bucket: 'tracehound-evidence',
+  prefix: 'prod/evidence/',
 })
 ```
 
@@ -211,24 +206,17 @@ const rateLimiter = createRateLimiter({
 ## Events
 
 ```typescript
-// Quarantine event
-agent.on('quarantine', (event) => {
-  console.log('Threat quarantined:', event.evidenceId)
+// Notification emitter (createTracehound().notifications)
+th.notifications.on('threat.detected', (e) => {
+  console.log('Threat:', e.payload.category)
 })
 
-// Rate limit event
-agent.on('rateLimit', (event) => {
-  console.log('Source rate limited:', event.source)
+th.notifications.on('evidence.quarantined', (e) => {
+  console.log('Quarantined:', e.payload.handle.signature)
 })
 
-// Eviction event
-agent.on('eviction', (event) => {
-  console.log('Evidence evicted:', event.evidenceId)
-})
-
-// Error event (fail-safe triggered)
-agent.on('error', (error) => {
-  console.error('Tracehound error:', error)
+th.notifications.on('rate_limit.exceeded', (e) => {
+  console.log('Rate limited:', e.payload.source)
 })
 ```
 
@@ -238,13 +226,19 @@ agent.on('error', (error) => {
 
 Core has sensible defaults for most workloads:
 
-| Limit             | Default | With Horizon   |
-| ----------------- | ------- | -------------- |
-| HoundPool workers | 8       | Unlimited      |
-| Multi-instance    | ❌      | ✅ Redis/KeyDB |
-| mTLS              | ❌      | ✅             |
+| Limit               | Default | With Horizon   |
+| ------------------- | ------- | -------------- |
+| HoundPool processes | 4       | Unlimited      |
+| Multi-instance      | ❌      | ✅ Redis/KeyDB |
+| mTLS                | ❌      | ✅             |
 
 For scale-out, add [Horizon](/docs/packages/horizon) ($9 perpetual).
+
+---
+
+## Kubernetes
+
+v1.1.0+ includes a K8s Deployment Guide in the core repo with resource sizing, ConfigMaps, health probes, and Prometheus metrics.
 
 ---
 

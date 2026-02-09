@@ -15,10 +15,12 @@ Complete reference for the `@tracehound/core` package.
 
 | Function              | Purpose                               |
 | --------------------- | ------------------------------------- |
-| `createAgent()`       | Main entry point, intercepts requests |
-| `createQuarantine()`  | Evidence storage with eviction        |
+| `createTracehound()`  | Recommended entry point, creates full runtime |
+| `createAgent()`       | Low-level agent (requires quarantine, rateLimiter, evidenceFactory) |
+| `createQuarantine()`  | N/A — use `new Quarantine(config, auditChain)` or `createTracehound` |
 | `createRateLimiter()` | Per-source rate limiting              |
 | `createWatcher()`     | Pull-based observability              |
+| `createS3ColdStorage()` | S3-compatible cold storage (v1.1.0+) |
 | `generateSecureId()`  | UUIDv7 generation                     |
 
 ---
@@ -27,16 +29,18 @@ Complete reference for the `@tracehound/core` package.
 
 The main entry point for intercepting requests.
 
-### `createAgent(config)`
+### Recommended: `createTracehound(options)`
 
 ```typescript
-import { createAgent, createQuarantine } from '@tracehound/core'
+import { createTracehound } from '@tracehound/core'
 
-const agent = createAgent({
-  quarantine: createQuarantine({ maxCount: 1000 }),
-  rateLimiter: createRateLimiter({ windowMs: 60_000, maxRequests: 100 }), // optional
-  maxPayloadSize: 1_000_000, // optional, default 1MB
+const th = createTracehound({
+  quarantine: { maxCount: 1000, maxBytes: 100_000_000 },
+  rateLimit: { windowMs: 60_000, maxRequests: 100 },
+  maxPayloadSize: 1_000_000,
 })
+
+const result = th.agent.intercept(scent)
 ```
 
 ### `agent.intercept(scent)`
@@ -120,22 +124,13 @@ const threat: ThreatSignal = {
 
 ## Quarantine
 
-Evidence storage with bounded memory and priority-based eviction.
+Evidence storage with bounded memory and priority-based eviction. Created via `createTracehound()` or `new Quarantine(config, auditChain)`.
 
-### `createQuarantine(config, auditChain?)`
+### Access via createTracehound
 
 ```typescript
-import { createQuarantine, AuditChain } from '@tracehound/core'
-
-const auditChain = new AuditChain() // optional, enables Merkle chain
-const quarantine = createQuarantine(
-  {
-    maxCount: 1000,
-    maxBytes: 100_000_000, // 100MB
-    evictionPolicy: 'priority', // 'priority' | 'lru' | 'fifo'
-  },
-  auditChain,
-)
+const th = createTracehound()
+const quarantine = th.quarantine
 ```
 
 ### Methods
@@ -144,7 +139,7 @@ const quarantine = createQuarantine(
 | ------------------------ | ------------------------------ |
 | `quarantine.count`       | Current evidence count         |
 | `quarantine.bytes`       | Current memory usage           |
-| `quarantine.get(handle)` | Retrieve evidence by handle    |
+| `quarantine.get(signature)` | Retrieve evidence by signature |
 | `quarantine.flush()`     | Clear all evidence (emergency) |
 
 ---
@@ -169,17 +164,11 @@ const rateLimiter = createRateLimiter({
 
 ## Watcher
 
-Pull-based observability for threat statistics. No push, no callbacks.
-
-### `createWatcher(config)`
+Pull-based observability for threat statistics. Access via `createTracehound().watcher`.
 
 ```typescript
-import { createWatcher } from '@tracehound/core'
-
-const watcher = createWatcher({ quarantine, auditChain })
-
-// Get current snapshot
-const snapshot = watcher.getSnapshot()
+const th = createTracehound()
+const snapshot = th.watcher.getSnapshot()
 console.log(snapshot.stats)
 // { total: 150, bySeverity: { high: 20, medium: 80, low: 50 } }
 ```
@@ -232,28 +221,40 @@ if (verify(encoded)) {
 }
 ```
 
+### Async Codec & S3 Cold Storage (v1.1.0+)
+
+```typescript
+import { createS3ColdStorage, encodeWithIntegrityAsync, decodeWithIntegrityAsync } from '@tracehound/core'
+
+const coldStorage = createS3ColdStorage({ client, bucket, prefix })
+const encoded = await encodeWithIntegrityAsync(data)
+await coldStorage.write('ev-001', encoded)
+```
+
 ---
 
 ## Adapters
 
-Framework-specific adapters with optimized defaults:
-
-| Package               | Framework             |
-| --------------------- | --------------------- |
-| `@tracehound/express` | Express.js middleware |
-| `@tracehound/fastify` | Fastify plugin        |
+Separate packages: `@tracehound/express`, `@tracehound/fastify`
 
 ### Express Example
 
 ```typescript
-import { createTracehoundMiddleware } from '@tracehound/express'
+import { tracehound } from '@tracehound/express'
+import { createTracehound, generateSecureId } from '@tracehound/core'
+
+const th = createTracehound()
 
 app.use(
-  createTracehoundMiddleware({
-    maxPayloadSize: 1_000_000,
-    quarantine: { maxCount: 1000 },
-    rateLimit: { windowMs: 60_000, maxRequests: 100 },
-    detector: (req) => myWafCheck(req),
+  tracehound({
+    agent: th.agent,
+    extractScent: (req) => ({
+      id: generateSecureId(),
+      timestamp: Date.now(),
+      source: req.ip || 'unknown',
+      payload: { method: req.method, path: req.path },
+      threat: myWafCheck(req),
+    }),
   }),
 )
 ```

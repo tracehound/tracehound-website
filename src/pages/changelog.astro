@@ -12,19 +12,38 @@ import Layout from '../layouts/Layout.astro'
       <h1 class="text-4xl font-bold mb-12">Changelog</h1>
 
       <div class="relative border-l border-surface-highlight ml-4 space-y-16">
-        <!-- Example Entry -->
+        <!-- v1.1.0 -->
         <div class="pl-8 relative">
           <div class="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-primary rounded-full"></div>
-          <div class="text-sm text-text-muted mb-2 font-mono">v0.1.0 • December 28, 2025</div>
-          <h2 class="text-2xl font-bold text-white mb-4">Initial Release</h2>
+          <div class="text-sm text-text-muted mb-2 font-mono">v1.1.0 • February 10, 2026</div>
+          <h2 class="text-2xl font-bold text-white mb-4">Production Hardening (Phase 4)</h2>
           <div class="prose prose-invert max-w-none text-text-muted">
             <p>
-              We are thrilled to announce the initial release of Tracehound, the deterministic
-              security buffer for modern applications.
+              Phase 4 production hardening brings S3 cold storage, async codec, and Kubernetes
+              deployment guides.
             </p>
             <ul>
-              <li><strong>Tracehound Core:</strong> Runtime isolation and security primitives.</li>
-              <li><strong>Argos (Preview):</strong> Behavioral anomaly detection.</li>
+              <li><strong>Async Codec:</strong> Non-blocking gzip encode/decode for cold storage I/O.</li>
+              <li><strong>S3 Cold Storage:</strong> AWS S3, Cloudflare R2, GCS, MinIO adapters.</li>
+              <li><strong>K8s Deployment Guide:</strong> Production Kubernetes manifests and best practices.</li>
+              <li><strong>CI/CD:</strong> GitHub Actions workflow for Node.js 20/22.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- v1.0.0 -->
+        <div class="pl-8 relative">
+          <div class="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-primary rounded-full"></div>
+          <div class="text-sm text-text-muted mb-2 font-mono">v1.0.0 • December 27, 2024</div>
+          <h2 class="text-2xl font-bold text-white mb-4">Stable Release</h2>
+          <div class="prose prose-invert max-w-none text-text-muted">
+            <p>
+              Tracehound v1.0.0 — deterministic runtime security buffer for modern applications.
+            </p>
+            <ul>
+              <li><strong>Core:</strong> Agent, Quarantine, AuditChain, HoundPool, Fail-Safe.</li>
+              <li><strong>CLI & TUI:</strong> status, stats, inspect, watch commands.</li>
+              <li><strong>Adapters:</strong> Express and Fastify middleware.</li>
             </ul>
           </div>
         </div>
@@ -32,11 +51,11 @@ import Layout from '../layouts/Layout.astro'
         <div class="pl-8 relative">
           <div class="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-surface-highlight rounded-full">
           </div>
-          <div class="text-sm text-text-muted mb-2 font-mono">Coming Soon</div>
-          <h2 class="text-xl font-bold text-text-muted mb-2">Upcoming Features</h2>
+          <div class="text-sm text-text-muted mb-2 font-mono">Upcoming</div>
+          <h2 class="text-xl font-bold text-text-muted mb-2">Roadmap</h2>
           <p class="text-text-muted">
-            Check our <a href="/docs/roadmap" class="text-primary hover:underline">Roadmap</a> for what's
-            next.
+            See <a href="/docs/roadmap" class="text-primary hover:underline">Roadmap</a> for Phase 5+
+            (Forensics, Heimdall, Satellites).
           </p>
         </div>
       </div>
